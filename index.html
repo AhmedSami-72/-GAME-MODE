@@ -25,378 +25,154 @@
 
         <nav class="nav-links">
           <a href="index.html" class="nav-link active">الرئيسية</a>
-          <a href="topics.html" class="nav-link">مواضيع</a>
-          <a href="riddles.html" class="nav-link">فوازير</a>
-          <a href="jokes.html" class="nav-link">نكت</a>
-          <a href="universes.html" class="nav-link">عوالم الحياة</a>
-          <a href="stories.html" class="nav-link">قصص</a>
-          <a href="games.html" class="nav-link">ألعاب</a>
-          <a href="movies.html" class="nav-link">أفلام</a>
-          <a href="memories.html" class="nav-link">ذكرياتنا</a>
-          <a href="favorites.html" class="nav-link">المفضلة</a>
+          <a href="topics.html" class="nav-link">نتكلم</a>
+          <a href="games.html" class="nav-link">نلعب</a>
+          <a href="stories.html" class="nav-link">نحكي</a>
+          <a href="favorites.html" class="nav-link">المحفوظات</a>
         </nav>
 
         <div class="nav-actions">
-          <button class="btn-icon" data-open-modal="searchModal" title="بحث سريع" aria-label="بحث سريع">
-            🔍
+          <button class="btn-primary btn-surprise-trigger" style="min-height: 40px; padding: 0 16px; font-size: 0.88rem;">
+            🎲 هات حاجة
           </button>
-          <button class="btn-icon" data-open-modal="addCustomModal" title="أضف من عندك" aria-label="أضف من عندك">
-            ➕
-          </button>
-          <button class="btn-icon" data-open-modal="settingsModal" title="الإعدادات" aria-label="الإعدادات">
-            ⚙️
-          </button>
-          <button class="btn-icon btn-menu-drawer-trigger" title="القائمة" aria-label="القائمة">
-            ☰
-          </button>
+          <button class="btn-icon" data-open-modal="searchModal" title="بحث سريع" aria-label="بحث سريع">🔍</button>
+          <button class="btn-icon" data-open-modal="settingsModal" title="الإعدادات" aria-label="الإعدادات">⚙️</button>
+          <button class="btn-icon btn-menu-drawer-trigger" title="كل الأقسام" aria-label="كل الأقسام">☰</button>
         </div>
       </div>
     </header>
 
-    <!-- Main Content -->
+    <!-- Main Content (Home Page Core) -->
     <main class="page-container">
-      <!-- Hero Section -->
+      <!-- 1. Hero Section -->
       <section class="hero-card">
         <img src="assets/images/hero.jpg" alt="سهرة هادئة تحت النجوم" class="hero-background-art" onerror="this.style.display='none'" />
         <div class="hero-overlay"></div>
 
         <div class="hero-content">
-          <div class="hero-greeting greeting-names">أهلاً أحمد وإسراء ♾️</div>
-          <h1 class="hero-title">مش لاقيين نتكلم في إيه؟</h1>
-          <p class="hero-subtitle">اختاروا باب… وإحنا هنفتح الحكاية.</p>
+          <div class="hero-greeting greeting-names">👋 أهلاً أحمد وإسراء ♾️</div>
+          <h1 class="hero-title">مش لاقيين تتكلموا في إيه؟</h1>
+          <p class="hero-subtitle">ضغطة واحدة… وهنفتح لكم باب الحكاية فوراً.</p>
 
-          <!-- Big Cards Row: اعمل لنا سهرة & سهرة الضحك -->
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 14px; margin-bottom: 18px;">
-            <!-- Big Card 1: اعمل لنا سهرة -->
-            <div class="hero-evening-card btn-evening-generator-trigger" style="cursor: pointer; margin-bottom: 0;">
-              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
-                <span class="hero-evening-badge">✦ سهرة متكاملة</span>
-                <span style="font-size: 1.25rem;">🎲</span>
-              </div>
-              <h2 class="hero-evening-title">اعمل لنا سهرة الليلة ♾️</h2>
-              <p class="hero-evening-desc">
-                توليد فوري لجلسة تجمع قصة دافئة، وسؤال نقاش عميق، ولعبة ممتعة وموقف من مواقف الحياة.
-              </p>
-              <div class="hero-evening-action">
-                <span>✦ ابدأ السهرة التلقائية</span>
-                <span>←</span>
-              </div>
+          <!-- Main Giant Primary CTA -->
+          <button class="btn-giant-cta btn-surprise-trigger">
+            <span>🎲</span>
+            <span>هات حاجة!</span>
+          </button>
+
+          <!-- 2. اختاروا بسرعة (5 Core Doors) -->
+          <div style="width: 100%; margin-top: 10px;">
+            <div style="font-size: 0.82rem; font-weight: 700; color: var(--accent-gold); margin-bottom: 8px; text-align: right;">
+              ⚡ اختاروا بسرعة:
             </div>
-
-            <!-- Big Card 2: سهرة الضحك والفرفشة -->
-            <div class="hero-evening-card btn-laugh-night-trigger" style="cursor: pointer; margin-bottom: 0; background: linear-gradient(135deg, rgba(104, 24, 38, 0.45) 0%, rgba(35, 31, 39, 0.95) 100%); border-color: rgba(212, 122, 136, 0.4);">
-              <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
-                <span class="hero-evening-badge" style="background: rgba(212, 122, 136, 0.2); color: var(--accent-rose); border-color: rgba(212, 122, 136, 0.3);">
-                  😂 سهرة الضحك والفرفشة
-                </span>
-                <span style="font-size: 1.25rem;">🧩</span>
-              </div>
-              <h2 class="hero-evening-title">جلسة فوازير ونكت الليلة 😂</h2>
-              <p class="hero-evening-desc">
-                برنامج كوميدي للاتنين: نكتة ← فزورة ← نكتة ← لعبة خفيفة ← قضية تحقيق ← سؤال محبة.
-              </p>
-              <div class="hero-evening-action" style="color: var(--accent-rose);">
-                <span>😂 ابدأ سهرة الضحك الآن</span>
-                <span>←</span>
-              </div>
+            <div class="mobile-quick-actions-grid" style="grid-template-columns: repeat(5, 1fr);">
+              <a href="topics.html" class="quick-door-btn" title="مواضيع نقاش">
+                <span class="quick-door-icon">💬</span>
+                <span class="quick-door-text">موضوع</span>
+              </a>
+              <a href="riddles.html" class="quick-door-btn" title="فوازير وألغاز">
+                <span class="quick-door-icon">🧩</span>
+                <span class="quick-door-text">فزورة</span>
+              </a>
+              <a href="jokes.html" class="quick-door-btn" title="نكت وضحك">
+                <span class="quick-door-icon">😂</span>
+                <span class="quick-door-text">نكتة</span>
+              </a>
+              <a href="stories.html" class="quick-door-btn" title="قصص ملهمة">
+                <span class="quick-door-icon">📖</span>
+                <span class="quick-door-text">قصة</span>
+              </a>
+              <a href="games.html" class="quick-door-btn" title="ألعاب وتحديات">
+                <span class="quick-door-icon">🎮</span>
+                <span class="quick-door-text">لعبة</span>
+              </a>
             </div>
-          </div>
-
-          <!-- Quick Actions (6 Core Doors) -->
-          <div class="mobile-quick-actions-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100px, 100%), 1fr)); gap: 10px;">
-            <a href="topics.html" class="quick-door-btn">
-              <span class="quick-door-icon">💬</span>
-              <span class="quick-door-text">موضوع</span>
-            </a>
-            <a href="riddles.html" class="quick-door-btn">
-              <span class="quick-door-icon">🧩</span>
-              <span class="quick-door-text">فزورة</span>
-            </a>
-            <a href="jokes.html" class="quick-door-btn">
-              <span class="quick-door-icon">😂</span>
-              <span class="quick-door-text">نكتة</span>
-            </a>
-            <a href="stories.html" class="quick-door-btn">
-              <span class="quick-door-icon">📖</span>
-              <span class="quick-door-text">قصة</span>
-            </a>
-            <a href="games.html" class="quick-door-btn">
-              <span class="quick-door-icon">🎮</span>
-              <span class="quick-door-text">لعبة</span>
-            </a>
-            <button type="button" class="quick-door-btn btn-boredom-trigger">
-              <span class="quick-door-icon">🎲</span>
-              <span class="quick-door-text">زهقانين؟</span>
-            </button>
           </div>
         </div>
       </section>
 
-      <!-- Tonight's Discovery (Deterministic daily discovery based on date) -->
-      <section class="discovery-card" id="dailyDiscoveryContent">
+      <!-- 3. اعمل لنا سهرة (Evening Session Generator by Duration) -->
+      <section class="section-block" style="margin-bottom: 22px;">
+        <div class="hero-evening-card" style="background: linear-gradient(135deg, rgba(35, 31, 39, 0.95) 0%, rgba(22, 18, 26, 0.98) 100%);">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+            <span class="hero-evening-badge">🌙 اعمل لنا سهرة الليلة</span>
+            <span style="font-size: 1.25rem;">✨</span>
+          </div>
+
+          <h2 class="hero-evening-title">برنامج سهرة متكامل حسب وقتكم ♾️</h2>
+          <p class="hero-evening-desc">
+            توليد فوري ومحسوب لجلسة تجمع قصة دافئة، وسؤال نقاش عميق، ولعبة ممتعة ونكتة لطيفة. اختاروا المدة:
+          </p>
+
+          <!-- Duration Pickers -->
+          <div class="pill-selector" style="margin-bottom: 16px; padding-bottom: 4px;">
+            <button class="selector-tab" data-evening-duration="5" style="min-height: 44px; padding: 0 16px; font-size: 0.88rem;">⚡ 5 دقائق</button>
+            <button class="selector-tab active" data-evening-duration="15" style="min-height: 44px; padding: 0 16px; font-size: 0.88rem;">🌙 15 دقيقة</button>
+            <button class="selector-tab" data-evening-duration="30" style="min-height: 44px; padding: 0 16px; font-size: 0.88rem;">✨ 30 دقيقة</button>
+            <button class="selector-tab" data-evening-duration="60" style="min-height: 44px; padding: 0 16px; font-size: 0.88rem;">🔥 ساعة كاملة</button>
+          </div>
+
+          <button class="btn-primary btn-evening-generator-trigger" style="width: 100%; min-height: 48px; font-size: 0.95rem;">
+            ✦ ابدأ السهرة التلقائية (15 دقيقة) →
+          </button>
+        </div>
+      </section>
+
+      <!-- 4. اكتشاف اليوم (Single, Focused Daily Discovery) -->
+      <section class="discovery-card" id="dailyDiscoveryContent" style="margin-bottom: 22px;">
         <!-- Injected dynamically by app.js -->
       </section>
 
-      <!-- Horizontal Categories Scroll (App-like, touch scroll-snap) -->
+      <!-- 5. كل الأقسام والمزيد (Clean Hub Access) -->
       <section class="section-block" style="margin-bottom: 24px;">
-        <div class="section-header">
-          <h2 class="section-title">✨ أبواب وسهرات ومزاج الليلة</h2>
-          <span style="font-size: 0.82rem; color: var(--text-muted);">اسحب أفقيًا ↔</span>
-        </div>
-        <div class="horizontal-categories-track">
-          <a href="riddles.html" class="category-chip">
-            <span class="chip-icon">🧩</span>
-            <span class="chip-label">فوازير وألغاز</span>
-          </a>
-          <a href="jokes.html" class="category-chip">
-            <span class="chip-icon">😂</span>
-            <span class="chip-label">نكت وضحك</span>
-          </a>
-          <a href="topics.html?mood=romantic" class="category-chip">
-            <span class="chip-icon">❤️</span>
-            <span class="chip-label">عن بعض ولغات الحب</span>
-          </a>
-          <a href="topics.html?mood=deep" class="category-chip">
-            <span class="chip-icon">🧠</span>
-            <span class="chip-label">أسئلة عميقة وفلسفة</span>
-          </a>
-          <a href="topics.html?mood=funny" class="category-chip">
-            <span class="chip-icon">😂</span>
-            <span class="chip-label">ضحك ومواقف</span>
-          </a>
-          <a href="universes.html?tab=home" class="category-chip">
-            <span class="chip-icon">🏡</span>
-            <span class="chip-label">بيتنا ومسؤولياتنا</span>
-          </a>
-          <a href="universes.html?tab=budget" class="category-chip">
-            <span class="chip-icon">💰</span>
-            <span class="chip-label">الميزانية والاقتصاد</span>
-          </a>
-          <a href="universes.html?tab=parenting" class="category-chip">
-            <span class="chip-icon">👶</span>
-            <span class="chip-label">عائلة وتربية الأطفال</span>
-          </a>
-          <a href="movies.html" class="category-chip">
-            <span class="chip-icon">🎬</span>
-            <span class="chip-label">سينما وشخصيات</span>
-          </a>
-          <a href="memories.html" class="category-chip">
-            <span class="chip-icon">📸</span>
-            <span class="chip-label">صندوق ذكرياتنا</span>
-          </a>
-          <a href="stories.html?category=bedtime" class="category-chip">
-            <span class="chip-icon">🌙</span>
-            <span class="chip-label">حكايات قبل النوم</span>
-          </a>
-        </div>
-      </section>
-
-      <!-- Main Categories Bento Grid -->
-      <section class="section-block">
-        <div class="section-header">
-          <h2 class="section-title">🌌 أبواب الحكايات الكبرى</h2>
-          <a href="topics.html" class="section-link">عرض كل المواضيع ←</a>
-        </div>
-
-        <div class="cards-grid">
-          <!-- Card 0: Universes -->
-          <div class="topic-card" onclick="window.location.href='universes.html'" style="background: linear-gradient(135deg, rgba(216, 178, 110, 0.12) 0%, rgba(35, 31, 39, 0.95) 100%); border-color: rgba(216, 178, 110, 0.4);">
-            <div>
-              <div class="topic-meta">
-                <span style="color: var(--accent-gold); font-weight: 700;">منصة حياة للاتنين</span>
-                <span>8 عوالم متكاملة</span>
-              </div>
-              <h3 class="topic-title" style="margin-top: 8px;">🏡 بيتنا وميزانيتنا وأولادنا ومواقفنا</h3>
-              <p class="topic-desc" style="margin-top: 6px;">مين يعمل إيه في البيت، حاسبة ميزانية وتوفير، نقاشات قبل الأطفال، ألغاز وسهرة رومانسية كاملة.</p>
-            </div>
-            <div class="topic-footer">
-              <span style="color: var(--accent-gold); font-weight: 700;">افتح عوالمنا المشتركة ←</span>
-              <span>أدوات ونقاشات</span>
-            </div>
+        <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-hairline); border-radius: var(--radius-xl); padding: 20px; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;">
+          <div>
+            <div style="font-size: 0.85rem; color: var(--accent-gold); font-weight: 700; margin-bottom: 2px;">📦 كل الأقسام وعوالم بيننا</div>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">الأفلام، الفوازير، النكت، صندوق الذكريات، وعوالم بيتنا ومستقبلنا.</p>
           </div>
-
-          <!-- Card Riddles: الفوازير والألغاز -->
-          <div class="topic-card" onclick="window.location.href='riddles.html'" style="background: linear-gradient(135deg, rgba(216, 178, 110, 0.15) 0%, rgba(25, 22, 27, 0.95) 100%); border-color: rgba(216, 178, 110, 0.45);">
-            <div>
-              <div class="topic-meta">
-                <span style="color: var(--accent-gold); font-weight: 700;">تحدي وذكاء للاتنين</span>
-                <span>150+ فزورة ولغز</span>
-              </div>
-              <h3 class="topic-title" style="margin-top: 8px;">🧩 الفوازير والألغاز وقضايا التحقيق</h3>
-              <p class="topic-desc" style="margin-top: 6px;">فوازير سهلة وصعبة، ألغاز منطق وأرقام وملاحظة، وقضايا تحقيق وحلول مخفية بنظام التلميحات وسلسلة الفوازير.</p>
-            </div>
-            <div class="topic-footer">
-              <span style="color: var(--accent-gold); font-weight: 700;">ابدأ حل الفوازير ←</span>
-              <span>تحدي وتفكير</span>
-            </div>
-          </div>
-
-          <!-- Card Jokes: النكت والضحك -->
-          <div class="topic-card" onclick="window.location.href='jokes.html'" style="background: linear-gradient(135deg, rgba(104, 24, 38, 0.3) 0%, rgba(25, 22, 27, 0.95) 100%); border-color: rgba(212, 122, 136, 0.35);">
-            <div>
-              <div class="topic-meta">
-                <span style="color: var(--accent-rose); font-weight: 700;">واحة الضحك والروقان</span>
-                <span>350+ نكتة وموقف</span>
-              </div>
-              <h3 class="topic-title" style="margin-top: 8px;">😂 النكت والضحك ومين هيضحك الأول؟</h3>
-              <p class="topic-desc" style="margin-top: 6px;">نكت مصرية وعائلية، Dad Jokes، نكت شغل ومبرمجين، ومواقف كوميدية وتحدي الصمود والضحك مع تقييم النكت.</p>
-            </div>
-            <div class="topic-footer">
-              <span style="color: var(--accent-rose); font-weight: 700;">اضحكوا وفرفشوا ←</span>
-              <span>بهجة ومرح</span>
-            </div>
-          </div>
-
-          <!-- Card 1: About Us -->
-          <div class="topic-card" onclick="window.location.href='topics.html?category=about-us'">
-            <div>
-              <div class="topic-meta">
-                <span>عن بعض</span>
-                <span>12 موضوع حواري</span>
-              </div>
-              <h3 class="topic-title" style="margin-top: 8px;">❤️ أسرار علاقتنا ولغات الحب</h3>
-              <p class="topic-desc" style="margin-top: 6px;">عن أول انطباع، والأشياء الصغيرة التي تجعل قلب كل منا يطمئن للآخر.</p>
-            </div>
-            <div class="topic-footer">
-              <span style="color: var(--accent-gold); font-weight: 600;">افتح الباب ←</span>
-              <span>15 دقيقة</span>
-            </div>
-          </div>
-
-          <!-- Card 2: Deep Questions -->
-          <div class="topic-card" onclick="window.location.href='topics.html?category=deep'">
-            <div>
-              <div class="topic-meta">
-                <span>أسئلة عميقة</span>
-                <span>15 موضوع</span>
-              </div>
-              <h3 class="topic-title" style="margin-top: 8px;">🧠 قرارات ومخاوف وفلسفة حياة</h3>
-              <p class="topic-desc" style="margin-top: 6px;">حوار هادئ بلا أقنعة يكشف ما يدور في أعماق الروح دون أحكام مسبقة.</p>
-            </div>
-            <div class="topic-footer">
-              <span style="color: var(--accent-gold); font-weight: 600;">افتح الباب ←</span>
-              <span>20 دقيقة</span>
-            </div>
-          </div>
-
-          <!-- Card 3: Stories Universe -->
-          <div class="topic-card" onclick="window.location.href='stories.html'">
-            <div>
-              <div class="topic-meta">
-                <span>قصص وأساطير</span>
-                <span>22+ قصة كاملة</span>
-              </div>
-              <h3 class="topic-title" style="margin-top: 8px;">📚 حكايات دينية وتاريخية وأساطير</h3>
-              <p class="topic-desc" style="margin-top: 6px;">من وفاء خديجة وإيزيس وميدوسا إلى لغز ماري سيلست وسؤال: لو كنت مكانهم؟</p>
-            </div>
-            <div class="topic-footer">
-              <span style="color: var(--accent-gold); font-weight: 600;">اقرأ وناقش ←</span>
-              <span>نقاش ملهم</span>
-            </div>
-          </div>
-
-          <!-- Card 4: Games -->
-          <div class="topic-card" onclick="window.location.href='games.html'">
-            <div>
-              <div class="topic-meta">
-                <span>ألعاب للكوبلز</span>
-                <span>5 ألعاب تفاعلية</span>
-              </div>
-              <h3 class="topic-title" style="margin-top: 8px;">🎮 لو خيروك · ده ولا ده · مين يعرف التاني؟</h3>
-              <p class="topic-desc" style="margin-top: 6px;">ألعاب خفيفة وتحديات عفوية تسجل نقاط التوافق بينكما بمرح ومحبة.</p>
-            </div>
-            <div class="topic-footer">
-              <span style="color: var(--accent-gold); font-weight: 600;">ابدأ اللعب ←</span>
-              <span>نقاط وضحك</span>
-            </div>
-          </div>
-
-          <!-- Card 5: Movies & Characters -->
-          <div class="topic-card" onclick="window.location.href='movies.html'">
-            <div>
-              <div class="topic-meta">
-                <span>سينما وفلسفة</span>
-                <span>20+ فيلم وشخصية</span>
-              </div>
-              <h3 class="topic-title" style="margin-top: 8px;">🎬 نقاشات الأفلام ولو قابلنا الشخصية دي</h3>
-              <p class="topic-desc" style="margin-top: 6px;">من Interstellar وAbout Time إلى لقاء شيرلوك هولمز وتوماس شيلبي.</p>
-            </div>
-            <div class="topic-footer">
-              <span style="color: var(--accent-gold); font-weight: 600;">استكشف السينما ←</span>
-              <span>حوار عميق</span>
-            </div>
-          </div>
-
-          <!-- Card 6: Memory Box -->
-          <div class="topic-card" onclick="window.location.href='memories.html'">
-            <div>
-              <div class="topic-meta">
-                <span>ألبوم الذكريات</span>
-                <span>خاص بكما</span>
-              </div>
-              <h3 class="topic-title" style="margin-top: 8px;">📸 صندوق الذكريات ومسار الزمن</h3>
-              <p class="topic-desc" style="margin-top: 6px;">سجلوا أول مرة، وأجمل المواقف، وقائمة 'نتكلم فيه بعدين' للحفاظ على أفكاركم.</p>
-            </div>
-            <div class="topic-footer">
-              <span style="color: var(--accent-gold); font-weight: 600;">افتح الصندوق ←</span>
-              <span>ذكريات دافئة</span>
-            </div>
-          </div>
+          <button class="btn-secondary btn-menu-drawer-trigger" style="min-height: 46px; padding: 0 20px; font-size: 0.92rem;">
+            تصفح كل الأقسام ☰
+          </button>
         </div>
       </section>
     </main>
 
-    <!-- Quiet Footer -->
+    <!-- Footer -->
     <footer class="app-footer">
-      <p style="margin-bottom: 4px;">Between Us ♾️ — A Living Universe of Things To Talk About</p>
+      <p style="margin-bottom: 4px;">Between Us ♾️ — لأن الحكايات اللي بيننا بتعيش</p>
       <p style="font-size: 0.8rem; color: var(--text-muted);">
-        مخصص لـ <span class="partner-names-label">أحمد & إسراء</span> · صُنع بحب للحظات الهادئة
+        مخصص لـ <span class="partner-names-label">أحمد & إسراء</span>
       </p>
     </footer>
 
-    <!-- Mobile Bottom Navigation Bar -->
+    <!-- Standard 5-Tab Mobile Bottom Navigation Bar -->
     <nav class="bottom-nav">
       <a href="index.html" class="bottom-nav-item active">
-        <span class="bottom-nav-icon">⌂</span>
+        <span class="bottom-nav-icon">🏠</span>
         <span>الرئيسية</span>
       </a>
       <a href="topics.html" class="bottom-nav-item">
         <span class="bottom-nav-icon">💬</span>
-        <span>مواضيع</span>
-      </a>
-      <a href="riddles.html" class="bottom-nav-item">
-        <span class="bottom-nav-icon">🧩</span>
-        <span>فوازير</span>
-      </a>
-      <a href="jokes.html" class="bottom-nav-item">
-        <span class="bottom-nav-icon">😂</span>
-        <span>نكت</span>
-      </a>
-      <a href="universes.html" class="bottom-nav-item">
-        <span class="bottom-nav-icon">🌌</span>
-        <span>عوالمنا</span>
+        <span>نتكلم</span>
       </a>
       <a href="games.html" class="bottom-nav-item">
         <span class="bottom-nav-icon">🎮</span>
-        <span>ألعاب</span>
+        <span>نلعب</span>
+      </a>
+      <a href="stories.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">📚</span>
+        <span>نحكي</span>
       </a>
       <a href="favorites.html" class="bottom-nav-item">
-        <span class="bottom-nav-icon">♡</span>
-        <span>المفضلة</span>
+        <span class="bottom-nav-icon">❤️</span>
+        <span>المحفوظات</span>
       </a>
     </nav>
   </div>
 
-  <!-- MODALS -->
+  <!-- Global Shared Modals -->
 
-  <!-- 1. Surprise Modal -->
-  <div class="modal-overlay" id="surpriseModal">
-    <div class="modal-box" id="surpriseModalContent">
-      <!-- Populated dynamically by app.js -->
-    </div>
-  </div>
-
-  <!-- 2. Global Search Modal -->
+  <!-- 1. Search Modal -->
   <div class="modal-overlay" id="searchModal">
     <div class="modal-box">
       <div class="modal-header">
@@ -408,13 +184,13 @@
       </div>
       <div id="globalSearchResults" style="max-height: 50vh; overflow-y: auto;">
         <div style="text-align: center; color: var(--text-muted); padding: 24px;">
-          اكتب كلمتين للبحث في مئات المواضيع والقصص المحفوظة...
+          اكتب كلمتين للبحث في كل مواضيع، وقصص، وفوازير، ونكت، وأفلام بيننا...
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 3. Add Custom Content Modal -->
+  <!-- 2. Add Custom Content Modal -->
   <div class="modal-overlay" id="addCustomModal">
     <div class="modal-box">
       <div class="modal-header">
@@ -452,58 +228,44 @@
     </div>
   </div>
 
-  <!-- 4. Settings Modal -->
+  <!-- 3. Settings Modal -->
   <div class="modal-overlay" id="settingsModal">
     <div class="modal-box">
       <div class="modal-header">
-        <h3 class="modal-title">⚙️ إعدادات بيننا (Settings)</h3>
+        <h3 class="modal-title">⚙️ الإعدادات (Settings)</h3>
         <button class="btn-icon" data-close-modal>✕</button>
       </div>
-
       <div class="form-group">
         <label class="form-label">اسم الطرف الأول</label>
         <input type="text" id="settingsPartner1" class="form-input" value="أحمد" />
       </div>
-
       <div class="form-group">
         <label class="form-label">اسم الطرف الثاني</label>
         <input type="text" id="settingsPartner2" class="form-input" value="إسراء" />
       </div>
-
       <div class="form-group">
         <label class="form-label">المظهر (Theme)</label>
         <select id="settingsTheme" class="form-select">
-          <option value="dark">داكن رومانسي (Charcoal & Burgundy)</option>
-          <option value="light">فاتح دافئ (Warm Ivory & Gold)</option>
+          <option value="dark">داكن رومانسي</option>
+          <option value="light">فاتح دافئ</option>
         </select>
       </div>
-
       <div class="form-group" style="flex-direction: row; align-items: center; justify-content: space-between;">
-        <label class="form-label" style="margin: 0;">الحركات والأنيميشن (Animations)</label>
+        <label class="form-label" style="margin: 0;">الحركات والأنيميشن</label>
         <input type="checkbox" id="settingsMotion" checked style="width: 20px; height: 20px; accent-color: var(--accent-gold);" />
       </div>
-
       <div style="border-top: 1px solid var(--border-hairline); margin: 18px 0; padding-top: 14px;">
-        <h4 style="font-size: 0.95rem; margin-bottom: 8px; color: var(--accent-gold);">النسخ الاحتياطي ونقل البيانات</h4>
-        <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 12px;">احفظوا كل ذكرياتكم ومفضلاتكم بملف واحد يمكن استعادته في أي وقت وعلى أي جهاز:</p>
         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-          <button type="button" id="exportDataBtn" class="btn-secondary" style="font-size: 0.85rem;">
-            📥 تصدير البيانات (Export)
-          </button>
+          <button type="button" id="exportDataBtn" class="btn-secondary" style="font-size: 0.85rem;">📥 تصدير البيانات</button>
           <label class="btn-secondary" style="font-size: 0.85rem; cursor: pointer;">
-            📤 استيراد ملف (Import)
+            📤 استيراد ملف
             <input type="file" id="importDataInput" accept=".json" style="display: none;" />
           </label>
         </div>
       </div>
-
       <div style="border-top: 1px solid var(--border-hairline); margin-top: 14px; padding-top: 14px; display: flex; justify-content: space-between; align-items: center;">
-        <button type="button" id="resetDataBtn" style="color: var(--accent-rose); font-size: 0.85rem; text-decoration: underline;">
-          إعادة ضبط كل شيء
-        </button>
-        <button type="button" id="saveSettingsBtn" class="btn-primary">
-          حفظ التعديلات ✓
-        </button>
+        <button type="button" id="resetDataBtn" style="color: var(--accent-rose); font-size: 0.85rem; text-decoration: underline;">إعادة ضبط</button>
+        <button type="button" id="saveSettingsBtn" class="btn-primary">حفظ ✓</button>
       </div>
     </div>
   </div>

@@ -1477,3 +1477,81 @@ button:disabled,
   line-height: 1.6;
 }
 
+/* Giant Main CTA: "🎲 هات حاجة" */
+.btn-giant-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 420px;
+  min-height: 58px;
+  margin: 8px auto 20px;
+  background: linear-gradient(135deg, var(--accent-gold) 0%, #E2BE78 50%, var(--accent-gold) 100%);
+  color: #1A1208;
+  border: 1px solid #F7E4BE;
+  border-radius: var(--radius-xl);
+  font-size: 1.25rem;
+  font-weight: 800;
+  box-shadow: 0 8px 30px rgba(216, 178, 110, 0.32), 0 0 20px var(--accent-gold-glow);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  touch-action: manipulation;
+}
+
+.btn-giant-cta:hover {
+  background: linear-gradient(135deg, #F5CE8B 0%, #FBE9C4 100%);
+  box-shadow: 0 12px 40px rgba(216, 178, 110, 0.45);
+  transform: translateY(-2px);
+}
+
+.btn-giant-cta:active {
+  transform: scale(0.97);
+}
+
+/* Evening Session Steps UI */
+.evening-step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-lg);
+  text-align: right;
+  transition: border-color var(--transition-fast);
+}
+
+.evening-step-item:hover {
+  border-color: var(--border-subtle);
+}
+
+.step-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+  border-radius: var(--radius-full);
+  background: rgba(216, 178, 110, 0.15);
+  color: var(--accent-gold);
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+.step-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+  margin-bottom: 4px;
+}
+
+.step-desc {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.55;
+}
+

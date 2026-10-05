@@ -14,40 +14,31 @@
 </head>
 <body>
   <div class="app-wrapper">
-    <!-- Top Navigation Bar -->
+    <!-- Top Navigation Bar with Back Button -->
     <header class="top-nav">
       <div class="top-nav-inner">
-        <a href="index.html" class="nav-brand">
-          <span>Between Us</span>
-          <span class="brand-infinity">♾️</span>
-        </a>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <button class="btn-icon" onclick="BetweenUsApp.goBack()" title="رجوع" aria-label="رجوع">←</button>
+          <a href="index.html" class="nav-brand">
+            <span>Between Us</span>
+            <span class="brand-infinity">♾️</span>
+          </a>
+        </div>
 
         <nav class="nav-links">
           <a href="index.html" class="nav-link">الرئيسية</a>
-          <a href="topics.html" class="nav-link">مواضيع</a>
-          <a href="universes.html" class="nav-link">عوالم الحياة</a>
-          <a href="stories.html" class="nav-link">قصص</a>
-          <a href="games.html" class="nav-link">ألعاب</a>
-          <a href="riddles.html" class="nav-link active">فوازير</a>
-          <a href="jokes.html" class="nav-link">نكت</a>
-          <a href="movies.html" class="nav-link">أفلام</a>
-          <a href="memories.html" class="nav-link">ذكرياتنا</a>
-          <a href="favorites.html" class="nav-link">المفضلة</a>
+          <a href="topics.html" class="nav-link">نتكلم</a>
+          <a href="games.html" class="nav-link active">نلعب</a>
+          <a href="stories.html" class="nav-link">نحكي</a>
+          <a href="favorites.html" class="nav-link">المحفوظات</a>
         </nav>
 
         <div class="nav-actions">
-          <button class="btn-primary" onclick="BetweenUsRiddles.startGameMode()" style="min-height: 48px; padding: 0 16px; font-size: 0.9rem;">
+          <button class="btn-primary" onclick="BetweenUsRiddles.startGameMode()" style="min-height: 40px; padding: 0 16px; font-size: 0.88rem;">
             🎮 العب الفوازير
           </button>
-          <button class="btn-icon" data-open-modal="searchModal" title="بحث سريع" aria-label="بحث سريع">
-            🔍
-          </button>
-          <button class="btn-icon" data-open-modal="settingsModal" title="الإعدادات" aria-label="الإعدادات">
-            ⚙️
-          </button>
-          <button class="btn-icon btn-menu-drawer-trigger" title="القائمة" aria-label="القائمة">
-            ☰
-          </button>
+          <button class="btn-icon" data-open-modal="searchModal" title="بحث سريع" aria-label="بحث سريع">🔍</button>
+          <button class="btn-icon btn-menu-drawer-trigger" title="كل الأقسام" aria-label="كل الأقسام">☰</button>
         </div>
       </div>
     </header>
@@ -125,31 +116,27 @@
       </p>
     </footer>
 
-    <!-- Mobile Bottom Navigation Bar -->
+    <!-- Standard 5-Tab Mobile Bottom Navigation Bar -->
     <nav class="bottom-nav">
       <a href="index.html" class="bottom-nav-item">
-        <span class="bottom-nav-icon">⌂</span>
+        <span class="bottom-nav-icon">🏠</span>
         <span>الرئيسية</span>
       </a>
       <a href="topics.html" class="bottom-nav-item">
         <span class="bottom-nav-icon">💬</span>
-        <span>مواضيع</span>
+        <span>نتكلم</span>
       </a>
-      <a href="riddles.html" class="bottom-nav-item active">
-        <span class="bottom-nav-icon">🧩</span>
-        <span>فوازير</span>
-      </a>
-      <a href="jokes.html" class="bottom-nav-item">
-        <span class="bottom-nav-icon">😂</span>
-        <span>نكت</span>
-      </a>
-      <a href="games.html" class="bottom-nav-item">
+      <a href="games.html" class="bottom-nav-item active">
         <span class="bottom-nav-icon">🎮</span>
-        <span>ألعاب</span>
+        <span>نلعب</span>
+      </a>
+      <a href="stories.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">📚</span>
+        <span>نحكي</span>
       </a>
       <a href="favorites.html" class="bottom-nav-item">
-        <span class="bottom-nav-icon">♡</span>
-        <span>المفضلة</span>
+        <span class="bottom-nav-icon">❤️</span>
+        <span>المحفوظات</span>
       </a>
     </nav>
   </div>

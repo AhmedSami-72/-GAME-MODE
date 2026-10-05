@@ -1,12 +1,16 @@
 /**
  * Between Us ♾️ - Core Application Engine
- * Shell logic, UI initialization, Settings, Modals, Daily Discovery, Search & Surprise Engine.
+ * Shell logic, UI initialization, Settings, Modals, Daily Discovery, Unified "هات حاجة" Engine,
+ * Share Manager, Favorite Manager, Evening Session Generator, and Clean Navigation.
  */
 
 (function () {
   "use strict";
 
-  // Global App Namespace
+  // Anti-repeat memory for "هات حاجة"
+  const seenContentIds = new Set();
+  let currentActiveHatHagaItem = null;
+
   window.BetweenUsApp = {
     init() {
       this.applyThemeAndSettings();
@@ -14,14 +18,23 @@
       this.initMobileDrawer();
       this.initModals();
       this.initDailyDiscovery();
-      this.initSurpriseButton();
+      this.initSurpriseButtons();
       this.initGlobalSearch();
       this.initCustomContentForm();
       this.initSettingsModal();
       this.setupEventListeners();
     },
 
-    // Mobile Navigation Drawer (Sidebar / Sheet for ☰ button)
+    // Navigation: Back Button Helper
+    goBack() {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        window.location.href = "index.html";
+      }
+    },
+
+    // Mobile Navigation Drawer (All Sections / كل الأقسام)
     initMobileDrawer() {
       let drawer = document.getElementById("mobileMenuDrawer");
       if (!drawer) {
@@ -45,15 +58,32 @@
               <span class="greeting-names" style="font-size: 0.95rem; font-weight: 700; color: var(--accent-gold);">أهلاً بكم ♾️</span>
             </div>
 
-            <nav class="drawer-links">
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; padding-right: 4px;">الأقسام الرئيسية:</div>
+            <nav class="drawer-links" style="margin-bottom: 16px;">
               <a href="index.html" class="drawer-link ${currentPage === 'index.html' || currentPage === '' ? 'active' : ''}">
                 <span class="drawer-link-icon">🏠</span>
                 <span>الرئيسية</span>
               </a>
               <a href="topics.html" class="drawer-link ${currentPage === 'topics.html' ? 'active' : ''}">
                 <span class="drawer-link-icon">💬</span>
-                <span>مواضيع النقاش والأسئلة</span>
+                <span>نتكلم (مواضيع وأسئلة)</span>
               </a>
+              <a href="games.html" class="drawer-link ${currentPage === 'games.html' ? 'active' : ''}">
+                <span class="drawer-link-icon">🎮</span>
+                <span>نلعب (ألعاب وتحديات)</span>
+              </a>
+              <a href="stories.html" class="drawer-link ${currentPage === 'stories.html' ? 'active' : ''}">
+                <span class="drawer-link-icon">📚</span>
+                <span>نحكي (قصص وحكايات)</span>
+              </a>
+              <a href="favorites.html" class="drawer-link ${currentPage === 'favorites.html' ? 'active' : ''}">
+                <span class="drawer-link-icon">❤️</span>
+                <span>المحفوظات والسجل</span>
+              </a>
+            </nav>
+
+            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; padding-right: 4px;">عالم الاستكشاف والضحك:</div>
+            <nav class="drawer-links">
               <a href="riddles.html" class="drawer-link ${currentPage === 'riddles.html' ? 'active' : ''}">
                 <span class="drawer-link-icon">🧩</span>
                 <span>الفوازير والألغاز</span>
@@ -66,32 +96,20 @@
                 <span class="drawer-link-icon">🏡</span>
                 <span>عوالم الحياة وبيتنا</span>
               </a>
-              <a href="stories.html" class="drawer-link ${currentPage === 'stories.html' ? 'active' : ''}">
-                <span class="drawer-link-icon">📖</span>
-                <span>قصص ملهمة وحكايات</span>
-              </a>
-              <a href="games.html" class="drawer-link ${currentPage === 'games.html' ? 'active' : ''}">
-                <span class="drawer-link-icon">🎮</span>
-                <span>ألعاب وتحديات الزوجين</span>
-              </a>
               <a href="movies.html" class="drawer-link ${currentPage === 'movies.html' ? 'active' : ''}">
                 <span class="drawer-link-icon">🎬</span>
-                <span>أفلام ومسلسلات للنقاش</span>
+                <span>أفلام وسينما</span>
               </a>
               <a href="memories.html" class="drawer-link ${currentPage === 'memories.html' ? 'active' : ''}">
                 <span class="drawer-link-icon">⏳</span>
-                <span>ذكرياتنا وخريطة الطريق</span>
-              </a>
-              <a href="favorites.html" class="drawer-link ${currentPage === 'favorites.html' ? 'active' : ''}">
-                <span class="drawer-link-icon">⭐</span>
-                <span>المفضلة وما تم حفظه</span>
+                <span>صندوق الذكريات</span>
               </a>
             </nav>
 
             <div style="border-top: 1px solid var(--border-hairline); padding-top: 14px; margin-top: auto; display: flex; flex-direction: column; gap: 8px;">
-              <button class="drawer-link btn-surprise-trigger" style="color: var(--accent-gold);">
+              <button class="drawer-link" onclick="BetweenUsApp.openHatHaga();" style="color: var(--accent-gold);">
                 <span class="drawer-link-icon">🎲</span>
-                <span>فاجئنا بلحظة عشوائية</span>
+                <span>هات حاجة (اختيار عشوائي)</span>
               </button>
               <button class="drawer-link" data-open-modal="settingsModal">
                 <span class="drawer-link-icon">⚙️</span>
@@ -143,7 +161,6 @@
       document.documentElement.setAttribute("data-theme", settings.theme || "dark");
       document.body.setAttribute("data-motion", settings.motion !== false ? "true" : "false");
 
-      // Update personalized names throughout the UI
       const p1 = settings.partner1 || "أحمد";
       const p2 = settings.partner2 || "إسراء";
 
@@ -156,7 +173,7 @@
       });
     },
 
-    // 2. Active Nav Link Detection
+    // 2. Active Nav Link Detection (Standard 5 Core Tabs)
     initTopNav() {
       const currentPath = window.location.pathname;
       const currentPage = currentPath.substring(currentPath.lastIndexOf("/") + 1) || "index.html";
@@ -171,254 +188,548 @@
       });
     },
 
-    // 3. Daily Discovery Engine (Deterministic based on date, stable on refresh)
+    // 3. Daily Discovery Engine (Stable by date)
     initDailyDiscovery() {
       const discoveryBox = document.getElementById("dailyDiscoveryContent");
       if (!discoveryBox || !window.BetweenUsData) return;
 
       const now = new Date();
-      // Generate day index from year, month, date
       const dateSeed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
       const allTopics = window.BetweenUsData.topics || [];
       if (allTopics.length === 0) return;
 
       const topicIndex = dateSeed % allTopics.length;
       const dailyTopic = allTopics[topicIndex];
+      const isFav = window.BetweenUsStorage.isFavorite(dailyTopic.id);
 
       discoveryBox.innerHTML = `
-        <div class="discovery-kicker">✦ اكتشاف الليلة · ${dailyTopic.tags.join(" · ")}</div>
+        <div class="discovery-kicker">✦ اكتشاف الليلة · ${dailyTopic.tags.slice(0, 3).join(" · ")}</div>
         <h3 class="discovery-title">${dailyTopic.title}</h3>
         <p class="discovery-body">${dailyTopic.description}</p>
-        <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-          <button class="btn-primary" onclick="BetweenUsApp.openTopicSession('${dailyTopic.id}')" style="min-height: 48px; min-width: 48px; padding: 0 20px; font-size: 0.95rem;">
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+          <button class="btn-primary" onclick="BetweenUsApp.openTopicSession('${dailyTopic.id}')" style="min-height: 48px; padding: 0 22px; font-size: 0.95rem;">
             ابدأ نقاش الليلة →
           </button>
-          <button class="btn-secondary" onclick="BetweenUsStorage.addToTalk('${dailyTopic.title}', '${dailyTopic.category}'); BetweenUsApp.showToast('📌 تم حفظ الموضوع في نتكلم فيه بعدين');" style="min-height: 48px; min-width: 48px; padding: 0 18px; font-size: 0.9rem;">
-            📌 نتكلم فيه بعدين
+          <button class="btn-secondary" onclick="BetweenUsStorage.addToTalk('${dailyTopic.title}', '${dailyTopic.category}'); BetweenUsApp.showToast('📌 تم حفظ الموضوع في نتكلم فيه بعدين');" style="min-height: 48px; padding: 0 16px; font-size: 0.9rem;">
+            📌 بعدين
+          </button>
+          <button class="btn-icon" onclick="BetweenUsApp.shareContent({ title: '${dailyTopic.title.replace(/'/g, "\\'")}', text: '${dailyTopic.description.replace(/'/g, "\\'")}' })" title="مشاركة" aria-label="مشاركة">
+            🔗
           </button>
         </div>
       `;
     },
 
-    // 4. Surprise Engine ("✦ Surprise Us & زهقانين؟ هات حاجة")
-    initSurpriseButton() {
-      const surpriseBtns = document.querySelectorAll(".btn-surprise-trigger");
-      surpriseBtns.forEach(btn => {
-        btn.addEventListener("click", () => this.triggerSurprise());
+    // 4. "هات حاجة" - Unified Primary Random Content Engine (Core Loop)
+    initSurpriseButtons() {
+      // Any button with class .btn-surprise-trigger or .btn-hat-haga opens unified Hat Haga
+      document.querySelectorAll(".btn-surprise-trigger, .btn-hat-haga, .btn-boredom-trigger").forEach(btn => {
+        btn.addEventListener("click", e => {
+          e.preventDefault();
+          const filter = btn.getAttribute("data-filter") || "all";
+          this.openHatHaga(filter);
+        });
       });
 
-      const boredomBtns = document.querySelectorAll(".btn-boredom-trigger");
-      boredomBtns.forEach(btn => {
-        btn.addEventListener("click", () => this.openBoredomSurprise());
+      // Duration buttons for "اعمل لنا سهرة"
+      document.querySelectorAll("[data-evening-duration]").forEach(btn => {
+        btn.addEventListener("click", e => {
+          e.preventDefault();
+          const mins = parseInt(btn.getAttribute("data-evening-duration"), 10) || 15;
+          this.startEveningSession(mins);
+        });
       });
 
-      const laughNightBtns = document.querySelectorAll(".btn-laugh-night-trigger");
-      laughNightBtns.forEach(btn => {
-        btn.addEventListener("click", () => this.openLaughNightSession());
+      document.querySelectorAll(".btn-evening-generator-trigger").forEach(btn => {
+        btn.addEventListener("click", e => {
+          e.preventDefault();
+          this.startEveningSession(15);
+        });
       });
     },
 
-    triggerSurprise() {
+    // Collect all unified items across every data universe
+    getAllContentPool(filter = "all") {
       const data = window.BetweenUsData || {};
       const riddles = (window.BetweenUsRiddlesData && window.BetweenUsRiddlesData.riddles) || [];
       const jokes = (window.BetweenUsJokesData && window.BetweenUsJokesData.jokes) || [];
-
-      // Pick randomly across: topics, stories, movies, wouldYouRather, riddles, jokes, challenges
       const pool = [];
 
-      if (data.topics) {
-        data.topics.forEach(t => pool.push({ type: "موضوع نقاش", title: t.title, desc: t.description, id: t.id, actionType: "topic" }));
-      }
-      if (data.stories) {
-        data.stories.forEach(s => pool.push({ type: "قصة ملهمة", title: s.title, desc: s.intro, id: s.id, actionType: "story" }));
-      }
-      if (data.movies) {
-        data.movies.forEach(m => pool.push({ type: "نقاش سينمائي", title: m.title, desc: m.story, id: m.id, actionType: "movie" }));
-      }
-      if (data.challenges) {
-        data.challenges.forEach(c => pool.push({ type: "تحدي اللحظة", title: c.title, desc: c.action, id: c.id, actionType: "challenge" }));
-      }
-      if (data.wouldYouRather) {
-        data.wouldYouRather.forEach(w => pool.push({ type: "لو خيروك", title: `${w.scenarioA} أَم ${w.scenarioB}`, desc: "اختاروا وشوفوا هل اختياراتكم هتتفق؟", id: w.id, actionType: "game" }));
-      }
-      if (riddles.length > 0) {
-        riddles.slice(0, 30).forEach(r => pool.push({ type: "فزورة ذكاء", title: r.question, desc: `تلميح: ${r.hint}`, id: r.id, actionType: "riddle" }));
-      }
-      if (jokes.length > 0) {
-        jokes.slice(0, 30).forEach(j => pool.push({ type: "نكتة وضحك", title: j.text, desc: "اضحكوا وفرفشوا سوا!", id: j.id, actionType: "joke" }));
+      // 1. Topics (مواضيع)
+      if (filter === "all" || filter === "topic" || filter === "topics") {
+        (data.topics || []).forEach(t => {
+          pool.push({
+            id: t.id,
+            type: "topic",
+            typeLabel: "💬 موضوع نقاش",
+            icon: "💬",
+            title: t.title,
+            body: t.description,
+            subtext: `يشمل ${t.questions ? t.questions.length : 5} أسئلة متدرجة بعمق`,
+            link: `topics.html?id=${t.id}`,
+            openAction: `BetweenUsApp.openTopicSession('${t.id}')`,
+            openLabel: "ابدأ النقاش الآن →"
+          });
+        });
       }
 
-      const randomItem = pool[Math.floor(Math.random() * pool.length)];
+      // 2. Riddles (فوازير)
+      if (filter === "all" || filter === "riddle" || filter === "riddles") {
+        riddles.forEach(r => {
+          pool.push({
+            id: r.id,
+            type: "riddle",
+            typeLabel: "🧩 فزورة ولغز",
+            icon: "🧩",
+            title: r.question,
+            body: `💡 تلميح: ${r.hint}`,
+            subtext: `الصعوبة: ${r.difficulty === 'easy' ? 'سهلة' : (r.difficulty === 'hard' ? 'صعبة' : 'متوسطة')}`,
+            link: "riddles.html",
+            answer: r.answer,
+            explanation: r.explanation,
+            openAction: `window.location.href='riddles.html'`,
+            openLabel: "افتح الفوازير →"
+          });
+        });
+      }
+
+      // 3. Jokes (نكت)
+      if (filter === "all" || filter === "joke" || filter === "jokes") {
+        jokes.forEach(j => {
+          pool.push({
+            id: j.id,
+            type: "joke",
+            typeLabel: "😂 نكتة وموقف",
+            icon: "😂",
+            title: j.text,
+            body: "ابتسموا وفرفشوا سوا!",
+            subtext: j.tags ? j.tags.join(" · ") : "ضحك ومواقف",
+            link: "jokes.html",
+            openAction: `window.location.href='jokes.html'`,
+            openLabel: "المزيد من النكت →"
+          });
+        });
+      }
+
+      // 4. Stories (قصص)
+      if (filter === "all" || filter === "story" || filter === "stories") {
+        (data.stories || []).forEach(s => {
+          pool.push({
+            id: s.id,
+            type: "story",
+            typeLabel: "📖 قصة ملهمة",
+            icon: "📖",
+            title: s.title,
+            body: s.intro,
+            subtext: `المصدر: ${s.source || 'تراث وفكر'}`,
+            link: `stories.html?id=${s.id}`,
+            openAction: `window.location.href='stories.html?id=${s.id}'`,
+            openLabel: "اقرأ القصة كاملة →"
+          });
+        });
+      }
+
+      // 5. Games & WYR (ألعاب)
+      if (filter === "all" || filter === "game" || filter === "games") {
+        (data.wouldYouRather || []).forEach(w => {
+          pool.push({
+            id: w.id,
+            type: "game",
+            typeLabel: "🎮 لعبة: لو خيروك",
+            icon: "🎮",
+            title: `${w.scenarioA}\nأَم\n${w.scenarioB}`,
+            body: "كل واحد فيكم يختار ويقول السبب!",
+            subtext: "لعبة التوافق واكتشاف التفضيلات",
+            link: "games.html",
+            openAction: `window.location.href='games.html'`,
+            openLabel: "العب في ساحة الألعاب →"
+          });
+        });
+
+        (data.challenges || []).forEach(c => {
+          pool.push({
+            id: c.id,
+            type: "game",
+            typeLabel: "🎯 تحدي اللحظة",
+            icon: "🎯",
+            title: c.title,
+            body: c.action,
+            subtext: "تحدي فوري للاتنين",
+            link: "games.html",
+            openAction: `window.location.href='games.html'`,
+            openLabel: "المزيد من التحديات →"
+          });
+        });
+      }
+
+      // 6. Movies (سينما)
+      if (filter === "all" || filter === "movie" || filter === "movies") {
+        (data.movies || []).forEach(m => {
+          pool.push({
+            id: m.id,
+            type: "movie",
+            typeLabel: "🎬 نقاش سينمائي",
+            icon: "🎬",
+            title: `${m.title} (${m.year || ''})`,
+            body: m.story,
+            subtext: `النوع: ${m.genre || 'دراما'} · إخراج: ${m.director || ''}`,
+            link: `movies.html?id=${m.id}`,
+            openAction: `window.location.href='movies.html?id=${m.id}'`,
+            openLabel: "افتح أسئلة الفيلم →"
+          });
+        });
+      }
+
+      return pool;
+    },
+
+    // Unified "هات حاجة" Modal Launcher
+    openHatHaga(filter = "all") {
+      let pool = this.getAllContentPool(filter);
+      if (pool.length === 0) {
+        pool = this.getAllContentPool("all");
+      }
+
+      // Filter out recently seen items to avoid repetition
+      let freshPool = pool.filter(item => !seenContentIds.has(item.id));
+      if (freshPool.length === 0) {
+        seenContentIds.clear();
+        freshPool = pool;
+      }
+
+      const randomItem = freshPool[Math.floor(Math.random() * freshPool.length)];
       if (!randomItem) return;
 
-      const modal = document.getElementById("surpriseModal");
-      const content = document.getElementById("surpriseModalContent");
-      if (!modal || !content) return;
+      seenContentIds.add(randomItem.id);
+      currentActiveHatHagaItem = randomItem;
 
-      content.innerHTML = `
-        <div style="font-size: 0.82rem; color: var(--accent-gold); font-weight: 600; margin-bottom: 8px;">
-          ✦ مفاجأة الليلة · ${randomItem.type}
-        </div>
-        <h3 style="font-size: 1.3rem; margin-bottom: 12px; color: var(--text-primary); line-height: 1.4; white-space: pre-line;">
-          ${randomItem.title}
-        </h3>
-        <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 24px;">
-          ${randomItem.desc}
-        </p>
-        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-          <button class="btn-primary" onclick="BetweenUsApp.handleSurpriseAction('${randomItem.actionType}', '${randomItem.id}')" style="min-height: 48px; padding: 0 22px;">
-            يلا نخوض التجربة →
-          </button>
-          <button class="btn-secondary" onclick="BetweenUsApp.triggerSurprise()" style="min-height: 48px; padding: 0 18px;">
-            🎲 اختر حاجة تانية
-          </button>
+      this.renderHatHagaModal(randomItem, filter);
+      this.openModal("hatHagaModal");
+    },
+
+    renderHatHagaModal(item, currentFilter) {
+      let modal = document.getElementById("hatHagaModal");
+      if (!modal) {
+        modal = document.createElement("div");
+        modal.id = "hatHagaModal";
+        modal.className = "modal-overlay";
+        document.body.appendChild(modal);
+      }
+
+      const isFav = window.BetweenUsStorage.isFavorite(item.id);
+
+      modal.innerHTML = `
+        <div class="modal-box" style="max-width: 620px; text-align: right;">
+          <!-- Top Bar -->
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; border-bottom: 1px solid var(--border-hairline); padding-bottom: 12px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 1.3rem;">🎲</span>
+              <span style="font-size: 1.1rem; font-weight: 800; color: var(--accent-gold);">هات حاجة!</span>
+            </div>
+            <button class="btn-icon" data-close-modal style="width: 44px; height: 44px; min-width: 44px; min-height: 44px;" aria-label="إغلاق">✕</button>
+          </div>
+
+          <!-- Filter Pills -->
+          <div class="pill-selector" style="margin-bottom: 18px; padding-bottom: 6px;">
+            <button class="selector-tab ${currentFilter === 'all' ? 'active' : ''}" onclick="BetweenUsApp.openHatHaga('all')" style="min-height: 40px; padding: 6px 14px; font-size: 0.85rem;">🎲 الكل</button>
+            <button class="selector-tab ${currentFilter === 'topic' ? 'active' : ''}" onclick="BetweenUsApp.openHatHaga('topic')" style="min-height: 40px; padding: 6px 14px; font-size: 0.85rem;">💬 مواضيع</button>
+            <button class="selector-tab ${currentFilter === 'riddle' ? 'active' : ''}" onclick="BetweenUsApp.openHatHaga('riddle')" style="min-height: 40px; padding: 6px 14px; font-size: 0.85rem;">🧩 فوازير</button>
+            <button class="selector-tab ${currentFilter === 'joke' ? 'active' : ''}" onclick="BetweenUsApp.openHatHaga('joke')" style="min-height: 40px; padding: 6px 14px; font-size: 0.85rem;">😂 نكت</button>
+            <button class="selector-tab ${currentFilter === 'story' ? 'active' : ''}" onclick="BetweenUsApp.openHatHaga('story')" style="min-height: 40px; padding: 6px 14px; font-size: 0.85rem;">📖 قصص</button>
+            <button class="selector-tab ${currentFilter === 'game' ? 'active' : ''}" onclick="BetweenUsApp.openHatHaga('game')" style="min-height: 40px; padding: 6px 14px; font-size: 0.85rem;">🎮 ألعاب</button>
+            <button class="selector-tab ${currentFilter === 'movie' ? 'active' : ''}" onclick="BetweenUsApp.openHatHaga('movie')" style="min-height: 40px; padding: 6px 14px; font-size: 0.85rem;">🎬 سينما</button>
+          </div>
+
+          <!-- Main Content Card -->
+          <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 22px; margin-bottom: 20px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px;">
+              <span class="hero-evening-badge" style="background: rgba(216, 178, 110, 0.15); color: var(--accent-gold);">
+                ${item.typeLabel}
+              </span>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">${item.subtext || ''}</span>
+            </div>
+
+            <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary); line-height: 1.5; margin-bottom: 12px; white-space: pre-line;">
+              ${item.title}
+            </h3>
+
+            <p style="font-size: 0.96rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 16px;">
+              ${item.body}
+            </p>
+
+            ${item.answer ? `
+              <!-- Riddle Reveal inside Hat Haga -->
+              <div id="hathaga-riddle-answer" style="display: none; padding: 12px 14px; background: rgba(216, 178, 110, 0.12); border: 1px solid var(--accent-gold); border-radius: var(--radius-md); margin-bottom: 14px;">
+                <div style="font-weight: 800; color: var(--accent-gold); margin-bottom: 4px;">💡 الحل: ${item.answer}</div>
+                ${item.explanation ? `<div style="font-size: 0.88rem; color: var(--text-secondary);">${item.explanation}</div>` : ''}
+              </div>
+              <button id="hathaga-reveal-btn" class="btn-secondary" onclick="document.getElementById('hathaga-riddle-answer').style.display='block'; this.style.display='none';" style="min-height: 44px; padding: 0 16px; font-size: 0.88rem; margin-bottom: 14px;">
+                🔐 اكشف الحل
+              </button>
+            ` : ''}
+
+            <!-- Primary Action for Item -->
+            <div>
+              <button class="btn-primary" onclick="${item.openAction}" style="width: 100%; min-height: 48px; font-size: 0.95rem;">
+                ${item.openLabel}
+              </button>
+            </div>
+          </div>
+
+          <!-- Bottom Unified Actions -->
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap;">
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <button id="hathaga-fav-btn" class="btn-icon ${isFav ? 'active' : ''}" onclick="BetweenUsApp.toggleHatHagaFav()" title="حفظ في المفضلة" style="width: 48px; height: 48px; color: ${isFav ? 'var(--accent-gold)' : 'var(--text-muted)'};" aria-label="حفظ">
+                ${isFav ? '★' : '☆'}
+              </button>
+              <button class="btn-icon" onclick="BetweenUsStorage.addToTalk('${item.title.replace(/'/g, "\\'")}', '${item.type}'); BetweenUsApp.showToast('📌 تم حفظها في نتكلم فيه بعدين');" title="نتكلم فيه بعدين" aria-label="نتكلم فيه بعدين">
+                📌
+              </button>
+              <button class="btn-icon" onclick="BetweenUsApp.shareContent({ title: '${item.title.replace(/'/g, "\\'")}', text: '${item.body.replace(/'/g, "\\'")}' })" title="مشاركة" aria-label="مشاركة">
+                🔗
+              </button>
+            </div>
+
+            <button class="btn-gold" onclick="BetweenUsApp.openHatHaga('${currentFilter}')" style="min-height: 48px; padding: 0 22px; font-size: 0.95rem;">
+              🎲 التالي (هات حاجة تانية) →
+            </button>
+          </div>
         </div>
       `;
 
-      this.openModal("surpriseModal");
+      // Re-init close listeners
+      modal.querySelectorAll("[data-close-modal]").forEach(btn => {
+        btn.addEventListener("click", () => modal.classList.remove("active"));
+      });
+      modal.addEventListener("click", e => {
+        if (e.target === modal) modal.classList.remove("active");
+      });
     },
 
-    // "زهقانين؟ هات حاجة" (Picks randomly from Topics, Stories, Games, Riddles, Jokes, Challenges, Movies, Memories)
-    openBoredomSurprise() {
-      const data = window.BetweenUsData || {};
-      const riddles = (window.BetweenUsRiddlesData && window.BetweenUsRiddlesData.riddles) || [];
-      const jokes = (window.BetweenUsJokesData && window.BetweenUsJokesData.jokes) || [];
-      const memories = window.BetweenUsStorage.getMemories() || [];
+    toggleHatHagaFav() {
+      if (!currentActiveHatHagaItem) return;
+      const item = currentActiveHatHagaItem;
+      const isFav = window.BetweenUsStorage.toggleFavorite({
+        id: item.id,
+        type: item.type,
+        title: item.title
+      });
 
-      const universePicks = [
-        { type: "😂 نكتة للضحك", link: "jokes.html", action: "نكتة", icon: "😂", text: jokes.length ? jokes[Math.floor(Math.random() * jokes.length)].text : "مرة واحد..." },
-        { type: "🧩 فزورة تفكير", link: "riddles.html", action: "فزورة", icon: "🧩", text: riddles.length ? riddles[Math.floor(Math.random() * riddles.length)].question : "شيء كلما أخذت منه كبر..." },
-        { type: "💬 موضوع نقاش دافي", link: "topics.html", action: "موضوع", icon: "💬", text: data.topics ? data.topics[Math.floor(Math.random() * data.topics.length)].title : "نقاش عن طموحاتنا" },
-        { type: "📖 قصة ملهمة", link: "stories.html", action: "قصة", icon: "📖", text: data.stories ? data.stories[Math.floor(Math.random() * data.stories.length)].title : "حكاية من التاريخ" },
-        { type: "🎮 لعبة سريعة", link: "games.html", action: "لعبة", icon: "🎮", text: "لعبة ده ولا ده أو مين يعرف التاني أكتر؟" },
-        { type: "🎬 نقاش سينمائي", link: "movies.html", action: "فيلم", icon: "🎬", text: data.movies ? data.movies[Math.floor(Math.random() * data.movies.length)].title : "فيلم الليلة" },
-        { type: "📸 ذكرى من صندوقنا", link: "memories.html", action: "ذكريات", icon: "📸", text: memories.length ? memories[Math.floor(Math.random() * memories.length)].title : "أول كلمة كتبناها لبعض" }
-      ];
+      const btn = document.getElementById("hathaga-fav-btn");
+      if (btn) {
+        btn.classList.toggle("active", isFav);
+        btn.style.color = isFav ? "var(--accent-gold)" : "var(--text-muted)";
+        btn.textContent = isFav ? "★" : "☆";
+      }
 
-      const item = universePicks[Math.floor(Math.random() * universePicks.length)];
-
-      const modal = document.getElementById("surpriseModal");
-      const content = document.getElementById("surpriseModalContent");
-      if (!modal || !content) return;
-
-      content.innerHTML = `
-        <div style="font-size: 0.85rem; color: var(--accent-gold); font-weight: 700; margin-bottom: 8px;">
-          🎲 زهقانين؟ هات حاجة · ${item.icon} ${item.type}
-        </div>
-        <h3 style="font-size: 1.3rem; margin-bottom: 14px; color: var(--text-primary); line-height: 1.5; white-space: pre-line;">
-          ${item.text}
-        </h3>
-        <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 24px;">
-          اختارنا لكم هذا الاقتراح لكسر الروتين فوراً والاستمتاع باللحظة!
-        </p>
-        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-          <a href="${item.link}" class="btn-primary" style="min-height: 48px; padding: 0 24px; text-decoration: none; display: inline-flex; align-items: center;">
-            يلا نجربها سوا →
-          </a>
-          <button class="btn-secondary" onclick="BetweenUsApp.openBoredomSurprise()" style="min-height: 48px; padding: 0 18px;">
-            🎲 هات حاجة تانية
-          </button>
-        </div>
-      `;
-
-      this.openModal("surpriseModal");
+      this.showToast(isFav ? "★ تم الحفظ في المفضلة" : "تمت الإزالة من المفضلة");
     },
 
-    // "سهرة الضحك" (Combination Mode: Joke -> Riddle -> Joke -> Game -> Detective -> Joke -> Couple question)
-    openLaughNightSession() {
-      const riddles = (window.BetweenUsRiddlesData && window.BetweenUsRiddlesData.riddles) || [];
-      const jokes = (window.BetweenUsJokesData && window.BetweenUsJokesData.jokes) || [];
-      const topics = (window.BetweenUsData && window.BetweenUsData.topics) || [];
-      const detective = riddles.filter(r => r.category === "detective" || r.isDetective);
+    // 5. Unified Share System (Web Share API + Clipboard Fallback)
+    shareContent({ title, text, url }) {
+      const shareData = {
+        title: title ? `Between Us ♾️ | ${title}` : "Between Us ♾️",
+        text: text ? `"${title ? title + '\n\n' : ''}${text}"\n\n— من تطبيق Between Us ♾️` : "Between Us ♾️",
+        url: url || window.location.href
+      };
 
-      const joke1 = jokes[Math.floor(Math.random() * jokes.length)] || { text: "نكتة افتتاحية" };
-      const riddle1 = riddles[Math.floor(Math.random() * riddles.length)] || { question: "فزورة ذكاء" };
-      const joke2 = jokes[Math.floor(Math.random() * jokes.length)] || { text: "نكتة تانية" };
-      const detectiveCase = detective.length ? detective[Math.floor(Math.random() * detective.length)] : riddle1;
-      const joke3 = jokes[Math.floor(Math.random() * jokes.length)] || { text: "نكتة ختامية" };
-      const coupleTopic = topics.find(t => t.category === "about-us") || (topics[0] || { title: "سؤال قرب ومحبة" });
-
-      const modal = document.getElementById("surpriseModal");
-      const content = document.getElementById("surpriseModalContent");
-      if (!modal || !content) return;
-
-      content.innerHTML = `
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
-          <span class="hero-evening-badge" style="background: rgba(216, 178, 110, 0.15); color: var(--accent-gold);">
-            ✨ برنامج: سهرة الضحك والفرفشة
-          </span>
-          <button class="btn-icon" data-close-modal style="width: 48px; height: 48px; min-width: 48px; min-height: 48px;">✕</button>
-        </div>
-
-        <h3 style="font-size: 1.3rem; margin-bottom: 14px; color: var(--text-primary);">
-          سهرة كوميدية متكاملة للاتنين 😂🧩
-        </h3>
-
-        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; text-align: right;">
-          <div style="padding: 10px 14px; background: rgba(255, 255, 255, 0.04); border-radius: var(--radius-md); border: 1px solid var(--border-hairline);">
-            <div style="font-size: 0.8rem; color: var(--accent-gold); font-weight: 700;">1. نكتة البداية للابتسامة 😂</div>
-            <div style="font-size: 0.95rem; color: var(--text-primary); margin-top: 4px;">${joke1.text}</div>
-          </div>
-
-          <div style="padding: 10px 14px; background: rgba(255, 255, 255, 0.04); border-radius: var(--radius-md); border: 1px solid var(--border-hairline);">
-            <div style="font-size: 0.8rem; color: var(--accent-gold); font-weight: 700;">2. فزورة ذكاء وتحدي 🧩</div>
-            <div style="font-size: 0.95rem; color: var(--text-primary); margin-top: 4px;">${riddle1.question}</div>
-          </div>
-
-          <div style="padding: 10px 14px; background: rgba(255, 255, 255, 0.04); border-radius: var(--radius-md); border: 1px solid var(--border-hairline);">
-            <div style="font-size: 0.8rem; color: var(--accent-gold); font-weight: 700;">3. نكتة مواقف وسرعة بديهة 😂</div>
-            <div style="font-size: 0.95rem; color: var(--text-primary); margin-top: 4px;">${joke2.text}</div>
-          </div>
-
-          <div style="padding: 10px 14px; background: rgba(255, 255, 255, 0.04); border-radius: var(--radius-md); border: 1px solid var(--border-hairline);">
-            <div style="font-size: 0.8rem; color: var(--accent-gold); font-weight: 700;">4. قضية الليلة وتحقيق الذكاء 🕵️</div>
-            <div style="font-size: 0.95rem; color: var(--text-primary); margin-top: 4px;">${detectiveCase.question}</div>
-          </div>
-
-          <div style="padding: 10px 14px; background: rgba(255, 255, 255, 0.04); border-radius: var(--radius-md); border: 1px solid var(--border-hairline);">
-            <div style="font-size: 0.8rem; color: var(--accent-gold); font-weight: 700;">5. نكتة مسك الختام 😂</div>
-            <div style="font-size: 0.95rem; color: var(--text-primary); margin-top: 4px;">${joke3.text}</div>
-          </div>
-
-          <div style="padding: 10px 14px; background: rgba(216, 178, 110, 0.1); border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
-            <div style="font-size: 0.8rem; color: var(--accent-gold); font-weight: 700;">6. سؤال محبة ودفء للختام ❤️</div>
-            <div style="font-size: 0.95rem; color: var(--text-primary); margin-top: 4px;">${coupleTopic.title}</div>
-          </div>
-        </div>
-
-        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-          <a href="jokes.html" class="btn-primary" style="min-height: 48px; padding: 0 20px; text-decoration: none; display: inline-flex; align-items: center;">
-            افتح عالم النكت ←
-          </a>
-          <a href="riddles.html" class="btn-secondary" style="min-height: 48px; padding: 0 18px; text-decoration: none; display: inline-flex; align-items: center;">
-            افتح عالم الفوازير ←
-          </a>
-        </div>
-      `;
-
-      this.openModal("surpriseModal");
-    },
-
-    handleSurpriseAction(actionType, id) {
-      this.closeModal("surpriseModal");
-      if (actionType === "topic") {
-        this.openTopicSession(id);
-      } else if (actionType === "story") {
-        window.location.href = `stories.html?id=${id}`;
-      } else if (actionType === "movie") {
-        window.location.href = `movies.html?id=${id}`;
-      } else if (actionType === "game") {
-        window.location.href = `games.html`;
-      } else if (actionType === "challenge") {
-        window.location.href = `games.html#challenges`;
-      } else if (actionType === "riddle") {
-        window.location.href = `riddles.html`;
-      } else if (actionType === "joke") {
-        window.location.href = `jokes.html`;
+      if (navigator.share) {
+        navigator.share(shareData).catch(() => {
+          // If cancelled or failed, fallback to copy
+          this.copyToClipboard(shareData.text);
+        });
+      } else {
+        this.copyToClipboard(shareData.text);
       }
     },
 
-    // 5. Global Search Engine (Across Topics, Stories, Movies, WYR, Riddles, and Jokes)
+    copyToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          this.showToast("📋 تم نسخ المحتوى للمشاركة بنجاح!");
+        }).catch(() => {
+          this.fallbackCopyText(text);
+        });
+      } else {
+        this.fallbackCopyText(text);
+      }
+    },
+
+    fallbackCopyText(text) {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        document.execCommand("copy");
+        this.showToast("📋 تم نسخ المحتوى للمشاركة!");
+      } catch (err) {
+        this.showToast("تعذر النسخ التلقائي");
+      }
+      document.body.removeChild(ta);
+    },
+
+    // 6. Interactive Evening Session Generator (5, 15, 30, 60 minutes)
+    startEveningSession(minutes = 15) {
+      const data = window.BetweenUsData || {};
+      const topics = data.topics || [];
+      const stories = data.stories || [];
+      const riddles = (window.BetweenUsRiddlesData && window.BetweenUsRiddlesData.riddles) || [];
+      const jokes = (window.BetweenUsJokesData && window.BetweenUsJokesData.jokes) || [];
+      const wyr = data.wouldYouRather || [];
+
+      let modal = document.getElementById("eveningSessionModal");
+      if (!modal) {
+        modal = document.createElement("div");
+        modal.id = "eveningSessionModal";
+        modal.className = "modal-overlay";
+        document.body.appendChild(modal);
+      }
+
+      // Build program based on minutes
+      const randomTopic = topics[Math.floor(Math.random() * topics.length)] || { title: "نقاش الليلة", questions: ["سؤال محبة"] };
+      const randomStory = stories[Math.floor(Math.random() * stories.length)] || { title: "قصة الليلة", intro: "حكاية ملهمة" };
+      const randomJoke = jokes[Math.floor(Math.random() * jokes.length)] || { text: "نكتة لابتسامة الليلة" };
+      const randomRiddle = riddles[Math.floor(Math.random() * riddles.length)] || { question: "فزورة الليلة" };
+      const randomWyr = wyr[Math.floor(Math.random() * wyr.length)] || { scenarioA: "الخيار الأول", scenarioB: "الخيار الثاني" };
+
+      let stepsHtml = "";
+
+      if (minutes <= 5) {
+        stepsHtml = `
+          <div class="evening-step-item">
+            <span class="step-num">1</span>
+            <div>
+              <div class="step-title">💬 سؤال نقاش سريع ودافي</div>
+              <div class="step-desc">${randomTopic.questions ? randomTopic.questions[0] : randomTopic.title}</div>
+            </div>
+          </div>
+          <div class="evening-step-item">
+            <span class="step-num">2</span>
+            <div>
+              <div class="step-title">😂 نكتة للضحك وفرفشة اللحظة</div>
+              <div class="step-desc">${randomJoke.text}</div>
+            </div>
+          </div>
+        `;
+      } else if (minutes <= 15) {
+        stepsHtml = `
+          <div class="evening-step-item">
+            <span class="step-num">1</span>
+            <div>
+              <div class="step-title">📖 قصة قصيرة دافئة</div>
+              <div class="step-desc"><strong>${randomStory.title}</strong>: ${randomStory.intro}</div>
+            </div>
+          </div>
+          <div class="evening-step-item">
+            <span class="step-num">2</span>
+            <div>
+              <div class="step-title">💬 موضوع نقاش وسؤال عميق</div>
+              <div class="step-desc"><strong>${randomTopic.title}</strong>: ${randomTopic.questions ? randomTopic.questions[0] : ''}</div>
+            </div>
+          </div>
+          <div class="evening-step-item">
+            <span class="step-num">3</span>
+            <div>
+              <div class="step-title">🎮 لعبة سريعة: لو خيروك</div>
+              <div class="step-desc">${randomWyr.scenarioA} <strong>أَم</strong> ${randomWyr.scenarioB}</div>
+            </div>
+          </div>
+          <div class="evening-step-item">
+            <span class="step-num">4</span>
+            <div>
+              <div class="step-title">😂 نكتة مسك الختام</div>
+              <div class="step-desc">${randomJoke.text}</div>
+            </div>
+          </div>
+        `;
+      } else {
+        stepsHtml = `
+          <div class="evening-step-item">
+            <span class="step-num">1</span>
+            <div>
+              <div class="step-title">📖 قصة ملهمة للحوار</div>
+              <div class="step-desc"><strong>${randomStory.title}</strong>: ${randomStory.intro}</div>
+            </div>
+          </div>
+          <div class="evening-step-item">
+            <span class="step-num">2</span>
+            <div>
+              <div class="step-title">💬 جلسة نقاش متكاملة</div>
+              <div class="step-desc"><strong>${randomTopic.title}</strong> (${randomTopic.questions ? randomTopic.questions.length : 5} أسئلة)</div>
+            </div>
+          </div>
+          <div class="evening-step-item">
+            <span class="step-num">3</span>
+            <div>
+              <div class="step-title">🧩 فزورة ذكاء وتحدي</div>
+              <div class="step-desc">${randomRiddle.question}</div>
+            </div>
+          </div>
+          <div class="evening-step-item">
+            <span class="step-num">4</span>
+            <div>
+              <div class="step-title">🎮 لعبة لو خيروك</div>
+              <div class="step-desc">${randomWyr.scenarioA} <strong>أَم</strong> ${randomWyr.scenarioB}</div>
+            </div>
+          </div>
+          <div class="evening-step-item">
+            <span class="step-num">5</span>
+            <div>
+              <div class="step-title">😂 نكتة وضحك للختام</div>
+              <div class="step-desc">${randomJoke.text}</div>
+            </div>
+          </div>
+        `;
+      }
+
+      modal.innerHTML = `
+        <div class="modal-box" style="max-width: 640px; text-align: right;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid var(--border-hairline); padding-bottom: 12px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 1.3rem;">🌙</span>
+              <span style="font-size: 1.15rem; font-weight: 800; color: var(--accent-gold);">سهرة بيننا الليلة (${minutes} دقيقة)</span>
+            </div>
+            <button class="btn-icon" data-close-modal style="width: 44px; height: 44px; min-width: 44px; min-height: 44px;">✕</button>
+          </div>
+
+          <!-- Duration Selector Pills -->
+          <div class="pill-selector" style="margin-bottom: 16px; padding-bottom: 6px;">
+            <button class="selector-tab ${minutes === 5 ? 'active' : ''}" onclick="BetweenUsApp.startEveningSession(5)" style="min-height: 40px; padding: 6px 14px; font-size: 0.85rem;">⚡ 5 دقائق</button>
+            <button class="selector-tab ${minutes === 15 ? 'active' : ''}" onclick="BetweenUsApp.startEveningSession(15)" style="min-height: 40px; padding: 6px 14px; font-size: 0.85rem;">🌙 15 دقيقة</button>
+            <button class="selector-tab ${minutes === 30 ? 'active' : ''}" onclick="BetweenUsApp.startEveningSession(30)" style="min-height: 40px; padding: 6px 14px; font-size: 0.85rem;">✨ 30 دقيقة</button>
+            <button class="selector-tab ${minutes === 60 ? 'active' : ''}" onclick="BetweenUsApp.startEveningSession(60)" style="min-height: 40px; padding: 6px 14px; font-size: 0.85rem;">🔥 ساعة كاملة</button>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 22px; max-height: 55vh; overflow-y: auto;">
+            ${stepsHtml}
+          </div>
+
+          <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+            <button class="btn-primary" onclick="BetweenUsApp.openTopicSession('${randomTopic.id}')" style="min-height: 48px; padding: 0 24px; font-size: 0.95rem;">
+              ابدأ السهرة الآن →
+            </button>
+            <button class="btn-secondary" onclick="BetweenUsApp.startEveningSession(${minutes})" style="min-height: 48px; padding: 0 18px; font-size: 0.9rem;">
+              🎲 ولّد سهرة جديدة
+            </button>
+          </div>
+        </div>
+      `;
+
+      modal.querySelectorAll("[data-close-modal]").forEach(btn => {
+        btn.addEventListener("click", () => modal.classList.remove("active"));
+      });
+      modal.addEventListener("click", e => {
+        if (e.target === modal) modal.classList.remove("active");
+      });
+
+      this.openModal("eveningSessionModal");
+    },
+
+    // 7. Global Search Engine (Topics, Stories, Movies, WYR, Riddles, Jokes)
     initGlobalSearch() {
       const searchInputs = document.querySelectorAll(".global-search-input");
       const resultsContainer = document.getElementById("globalSearchResults");
@@ -442,50 +753,38 @@
       const jokes = (window.BetweenUsJokesData && window.BetweenUsJokesData.jokes) || [];
       const matches = [];
 
-      // Search Topics
       (data.topics || []).forEach(t => {
         if (t.title.includes(query) || t.description.includes(query) || t.tags.some(tag => tag.includes(query))) {
           matches.push({ type: "موضوع نقاش", title: t.title, link: `topics.html?id=${t.id}`, desc: t.description });
         }
       });
 
-      // Search Riddles
       riddles.forEach(r => {
         if (r.question.includes(query) || r.answer.includes(query) || (r.explanation && r.explanation.includes(query)) || r.tags.some(t => t.includes(query))) {
           matches.push({ type: "فزورة ولغز", title: r.question, link: `riddles.html`, desc: `الحل: ${r.answer}` });
         }
       });
 
-      // Search Jokes
       jokes.forEach(j => {
         if (j.text.includes(query) || j.tags.some(t => t.includes(query))) {
           matches.push({ type: "نكتة وموقف", title: j.text.substring(0, 50) + "...", link: `jokes.html`, desc: j.text });
         }
       });
 
-      // Search Stories
       (data.stories || []).forEach(s => {
         if (s.title.includes(query) || s.intro.includes(query) || s.story.includes(query)) {
           matches.push({ type: "قصة", title: s.title, link: `stories.html?id=${s.id}`, desc: s.intro });
         }
       });
 
-      // Search Movies
       (data.movies || []).forEach(m => {
         if (m.title.includes(query) || m.story.includes(query)) {
           matches.push({ type: "فيلم / مسلسل", title: m.title, link: `movies.html?id=${m.id}`, desc: m.story });
         }
       });
 
-      // Search Would You Rather & This or That
-      (data.wouldYouRather || []).forEach(w => {
-        if (w.scenarioA.includes(query) || w.scenarioB.includes(query)) {
-          matches.push({ type: "لو خيروك", title: `${w.scenarioA} أم ${w.scenarioB}`, link: `games.html`, desc: "لعبة لو خيروك" });
-        }
-      });
-
       if (matches.length === 0) {
-        container.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 30px;">لم نجد نتائج مطابقة لـ "${query}". جرب كلمة أخرى مثل: سفر، حب، ذكاء، قهوة...</div>`;
+        container.innerHTML = `<div style="text-align: center; color: var(--text-muted); padding: 30px;">لم نجد نتائج مطابقة لـ "${query}". جرب كلمة أخرى...</div>`;
         return;
       }
 
@@ -498,7 +797,7 @@
       `).join("");
     },
 
-    // 6. Add Custom Content Modal
+    // 8. Custom Content Form
     initCustomContentForm() {
       const form = document.getElementById("addCustomContentForm");
       if (!form) return;
@@ -508,7 +807,7 @@
         const type = document.getElementById("customType").value;
         const title = document.getElementById("customTitle").value;
         const content = document.getElementById("customText").value;
-        const tags = document.getElementById("customTags").value.split(",").map(t => t.trim()).filter(Boolean);
+        const tags = (document.getElementById("customTags").value || "").split(",").map(t => t.trim()).filter(Boolean);
 
         if (!title.trim() || !content.trim()) {
           this.showToast("من فضلك اكتب عنواناً ومحتوى للمشاركة");
@@ -524,11 +823,11 @@
 
         form.reset();
         this.closeModal("addCustomModal");
-        this.showToast("✨ تمت إضافة مشاركتكم الجميلة بنجاح!");
+        this.showToast("✨ تمت إضافة مشاركتكم بنجاح!");
       });
     },
 
-    // 7. Settings Modal
+    // 9. Settings Modal
     initSettingsModal() {
       const p1Input = document.getElementById("settingsPartner1");
       const p2Input = document.getElementById("settingsPartner2");
@@ -546,7 +845,7 @@
       const saveBtn = document.getElementById("saveSettingsBtn");
       if (saveBtn) {
         saveBtn.addEventListener("click", () => {
-          const updated = window.BetweenUsStorage.saveSettings({
+          window.BetweenUsStorage.saveSettings({
             partner1: p1Input.value.trim() || "أحمد",
             partner2: p2Input.value.trim() || "إسراء",
             theme: themeSelect ? themeSelect.value : "dark",
@@ -640,7 +939,7 @@
       if (modal) modal.classList.remove("active");
     },
 
-    // Toast Notification
+    // Toast Notification (No alerts)
     showToast(message, duration = 3000) {
       let container = document.querySelector(".toast-container");
       if (!container) {
@@ -654,7 +953,6 @@
       toast.textContent = message;
       container.appendChild(toast);
 
-      // Trigger reflow for transition
       requestAnimationFrame(() => toast.classList.add("show"));
 
       setTimeout(() => {
@@ -663,7 +961,7 @@
       }, duration);
     },
 
-    // Open Topic Session (Delegates to topics.js or redirects)
+    // Topic Session Launcher
     openTopicSession(topicId) {
       if (window.BetweenUsTopics && typeof window.BetweenUsTopics.startSession === "function") {
         window.BetweenUsTopics.startSession(topicId);
@@ -672,59 +970,11 @@
       }
     },
 
-    // Riddles Data Accessor & Fetch Engine
-    getRiddles(category = "all", query = "") {
-      const data = (window.BetweenUsRiddlesData && window.BetweenUsRiddlesData.riddles) || [];
-      let list = data;
-      if (category && category !== "all") {
-        list = list.filter(r => r.category === category);
-      }
-      if (query) {
-        const q = query.trim().toLowerCase();
-        list = list.filter(r =>
-          r.question.toLowerCase().includes(q) ||
-          r.answer.toLowerCase().includes(q) ||
-          (r.explanation && r.explanation.toLowerCase().includes(q)) ||
-          r.tags.some(t => t.toLowerCase().includes(q))
-        );
-      }
-      return list;
-    },
-
-    getRiddleById(id) {
-      const all = this.getRiddles();
-      return all.find(r => r.id === id) || null;
-    },
-
-    getDailyRiddle() {
-      const all = this.getRiddles();
-      if (all.length === 0) return null;
-      const now = new Date();
-      const dateSeed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
-      return all[dateSeed % all.length];
-    },
-
-    getRandomRiddle(category = "all") {
-      const pool = this.getRiddles(category);
-      if (pool.length === 0) return null;
-      return pool[Math.floor(Math.random() * pool.length)];
-    },
-
-    getDetectiveRiddles() {
-      return this.getRiddles().filter(r => r.category === "detective" || r.isDetective);
-    },
-
-    getRiddleCategories() {
-      return (window.BetweenUsRiddlesData && window.BetweenUsRiddlesData.categories) || [];
-    },
-
     setupEventListeners() {
-      // Re-apply settings on storage update
       document.addEventListener("settingsUpdated", () => this.applyThemeAndSettings());
     }
   };
 
-  // Launch on DOMContentLoaded
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", () => window.BetweenUsApp.init());
   } else {

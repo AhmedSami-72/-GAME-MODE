@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>المفضلة وسجل الجلسات ♾️ Between Us</title>
-  <meta name="description" content="كل ما احتفظتم به من مواضيع وقصص وأفلام، وسجل الجلسات الحوارية السابقة." />
+  <title>المحفوظات والسجل ❤️ Between Us ♾️</title>
+  <meta name="description" content="كل ما احتفظتم به من مواضيع وفوازير ونكت وقصص وأفلام، وسجل الجلسات الحوارية السابقة." />
   <meta name="theme-color" content="#121013" />
 
   <link rel="stylesheet" href="css/style.css" />
@@ -12,41 +12,41 @@
 </head>
 <body>
   <div class="app-wrapper">
+    <!-- Top Navigation Bar with Back Button -->
     <header class="top-nav">
       <div class="top-nav-inner">
-        <a href="index.html" class="nav-brand">
-          <span>Between Us</span>
-          <span class="brand-infinity">♾️</span>
-        </a>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <button class="btn-icon" onclick="BetweenUsApp.goBack()" title="رجوع" aria-label="رجوع">←</button>
+          <a href="index.html" class="nav-brand">
+            <span>Between Us</span>
+            <span class="brand-infinity">♾️</span>
+          </a>
+        </div>
 
         <nav class="nav-links">
           <a href="index.html" class="nav-link">الرئيسية</a>
-          <a href="topics.html" class="nav-link">مواضيع</a>
-          <a href="riddles.html" class="nav-link">فوازير</a>
-          <a href="jokes.html" class="nav-link">نكت</a>
-          <a href="universes.html" class="nav-link">عوالم الحياة</a>
-          <a href="stories.html" class="nav-link">قصص</a>
-          <a href="games.html" class="nav-link">ألعاب</a>
-          <a href="movies.html" class="nav-link">أفلام</a>
-          <a href="memories.html" class="nav-link">ذكرياتنا</a>
-          <a href="favorites.html" class="nav-link active">المفضلة</a>
+          <a href="topics.html" class="nav-link">نتكلم</a>
+          <a href="games.html" class="nav-link">نلعب</a>
+          <a href="stories.html" class="nav-link">نحكي</a>
+          <a href="favorites.html" class="nav-link active">المحفوظات</a>
         </nav>
 
         <div class="nav-actions">
+          <button class="btn-primary btn-surprise-trigger" style="min-height: 40px; padding: 0 14px; font-size: 0.85rem;">
+            🎲 هات حاجة
+          </button>
           <button class="btn-icon" data-open-modal="searchModal" title="بحث سريع" aria-label="بحث سريع">🔍</button>
-          <button class="btn-icon" data-open-modal="addCustomModal" title="أضف من عندك" aria-label="أضف من عندك">➕</button>
-          <button class="btn-icon" data-open-modal="settingsModal" title="الإعدادات" aria-label="الإعدادات">⚙️</button>
-          <button class="btn-icon btn-menu-drawer-trigger" title="القائمة" aria-label="القائمة">☰</button>
+          <button class="btn-icon btn-menu-drawer-trigger" title="كل الأقسام" aria-label="كل الأقسام">☰</button>
         </div>
       </div>
     </header>
 
     <main class="page-container">
-      <div style="margin-bottom: 24px; text-align: center;">
+      <div style="margin-bottom: 20px; text-align: center;">
         <span style="font-size: 0.85rem; color: var(--accent-gold); font-weight: 600;">ركن المحفوظات الخاصة</span>
         <h1 style="font-size: 1.85rem; margin: 4px 0 8px;">مفضلتنا وسجل الجلسات ❤️</h1>
         <p style="font-size: 0.95rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
-          كل الأسئلة والمواضيع والقصص التي لمست قلوبكم، مع أرشيف الجلسات التي خضتموها معاً.
+          كل الأسئلة والمواضيع والفوازير والقصص التي لمست قلوبكم، مع أرشيف الجلسات السابقة.
         </p>
       </div>
 
@@ -62,9 +62,13 @@
       <section id="tab-favorites" class="fav-section">
         <div class="pill-selector" style="margin-bottom: 18px;">
           <button class="selector-tab fav-filter active" onclick="filterFavs('all')">الكل</button>
-          <button class="selector-tab fav-filter" onclick="filterFavs('topic')">مواضيع</button>
-          <button class="selector-tab fav-filter" onclick="filterFavs('story')">قصص</button>
-          <button class="selector-tab fav-filter" onclick="filterFavs('movie')">أفلام</button>
+          <button class="selector-tab fav-filter" onclick="filterFavs('topic')">💬 مواضيع</button>
+          <button class="selector-tab fav-filter" onclick="filterFavs('riddle')">🧩 فوازير</button>
+          <button class="selector-tab fav-filter" onclick="filterFavs('joke')">😂 نكت</button>
+          <button class="selector-tab fav-filter" onclick="filterFavs('story')">📖 قصص</button>
+          <button class="selector-tab fav-filter" onclick="filterFavs('game')">🎮 ألعاب</button>
+          <button class="selector-tab fav-filter" onclick="filterFavs('movie')">🎬 أفلام</button>
+          <button class="selector-tab fav-filter" onclick="filterFavs('memory')">📸 ذكريات</button>
         </div>
 
         <div class="cards-grid" id="favoritesGrid">
@@ -80,7 +84,7 @@
       </section>
 
       <!-- Export / Import Action Banner -->
-      <section style="margin-top: 40px; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 24px; text-align: center;">
+      <section style="margin-top: 36px; background: var(--bg-surface-elevated); border: 1px solid var(--border-subtle); border-radius: var(--radius-xl); padding: 22px; text-align: center;">
         <h3 style="font-size: 1.15rem; color: var(--text-primary); margin-bottom: 6px;">حفظ بياناتكم بأمان للأبد</h3>
         <p style="font-size: 0.88rem; color: var(--text-secondary); max-width: 500px; margin: 0 auto 16px;">
           يمكنكم تنزيل ملف نسخة احتياطية بكل ذكرياتكم ومفضلاتكم، ونقلها لأي موبايل أو كمبيوتر آخر.
@@ -97,44 +101,32 @@
       </section>
     </main>
 
-    <!-- Mobile Bottom Navigation Bar -->
+    <!-- Standard 5-Tab Mobile Bottom Navigation Bar -->
     <nav class="bottom-nav">
       <a href="index.html" class="bottom-nav-item">
-        <span class="bottom-nav-icon">⌂</span>
+        <span class="bottom-nav-icon">🏠</span>
         <span>الرئيسية</span>
       </a>
       <a href="topics.html" class="bottom-nav-item">
         <span class="bottom-nav-icon">💬</span>
-        <span>مواضيع</span>
-      </a>
-      <a href="universes.html" class="bottom-nav-item">
-        <span class="bottom-nav-icon">🌌</span>
-        <span>عوالمنا</span>
-      </a>
-      <a href="stories.html" class="bottom-nav-item">
-        <span class="bottom-nav-icon">📚</span>
-        <span>قصص</span>
+        <span>نتكلم</span>
       </a>
       <a href="games.html" class="bottom-nav-item">
         <span class="bottom-nav-icon">🎮</span>
-        <span>ألعاب</span>
+        <span>نلعب</span>
       </a>
-      <a href="memories.html" class="bottom-nav-item">
-        <span class="bottom-nav-icon">📸</span>
-        <span>ذكريات</span>
+      <a href="stories.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">📚</span>
+        <span>نحكي</span>
       </a>
       <a href="favorites.html" class="bottom-nav-item active">
-        <span class="bottom-nav-icon">♡</span>
-        <span>المفضلة</span>
+        <span class="bottom-nav-icon">❤️</span>
+        <span>المحفوظات</span>
       </a>
     </nav>
   </div>
 
   <!-- Shared Modals -->
-  <div class="modal-overlay" id="surpriseModal">
-    <div class="modal-box" id="surpriseModalContent"></div>
-  </div>
-
   <div class="modal-overlay" id="searchModal">
     <div class="modal-box">
       <div class="modal-header">
@@ -142,41 +134,9 @@
         <button class="btn-icon" data-close-modal>✕</button>
       </div>
       <div class="form-group">
-        <input type="text" class="form-input global-search-input" placeholder="ابحث عن موضوع، قصة، فيلم، أو كلمة..." />
+        <input type="text" class="form-input global-search-input" placeholder="ابحث في المحفوظات وكل الأقسام..." />
       </div>
       <div id="globalSearchResults" style="max-height: 50vh; overflow-y: auto;"></div>
-    </div>
-  </div>
-
-  <div class="modal-overlay" id="addCustomModal">
-    <div class="modal-box">
-      <div class="modal-header">
-        <h3 class="modal-title">✨ أضف حاجة من عندك</h3>
-        <button class="btn-icon" data-close-modal>✕</button>
-      </div>
-      <form id="addCustomContentForm">
-        <div class="form-group">
-          <label class="form-label">نوع المشاركة</label>
-          <select id="customType" class="form-select">
-            <option value="topic">موضوع للنقاش</option>
-            <option value="question">سؤال خاص</option>
-            <option value="story">حكاية أو قصة</option>
-            <option value="memory">ذكرى شخصية</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">العنوان</label>
-          <input type="text" id="customTitle" class="form-input" placeholder="العنوان..." required />
-        </div>
-        <div class="form-group">
-          <label class="form-label">المحتوى</label>
-          <textarea id="customText" class="form-textarea" rows="4" placeholder="المحتوى..." required></textarea>
-        </div>
-        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
-          <button type="button" class="btn-secondary" data-close-modal>إلغاء</button>
-          <button type="submit" class="btn-primary">حفظ في عالمنا ✦</button>
-        </div>
-      </form>
     </div>
   </div>
 
@@ -201,6 +161,10 @@
           <option value="light">فاتح دافئ</option>
         </select>
       </div>
+      <div class="form-group" style="flex-direction: row; align-items: center; justify-content: space-between;">
+        <label class="form-label" style="margin: 0;">الحركات والأنيميشن</label>
+        <input type="checkbox" id="settingsMotion" checked style="width: 20px; height: 20px; accent-color: var(--accent-gold);" />
+      </div>
       <div style="border-top: 1px solid var(--border-hairline); margin: 18px 0; padding-top: 14px;">
         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
           <button type="button" id="exportDataBtn" class="btn-secondary" style="font-size: 0.85rem;">📥 تصدير البيانات</button>
@@ -218,25 +182,26 @@
   </div>
 
   <script src="js/data.js"></script>
+  <script src="js/riddles-data.js"></script>
+  <script src="js/jokes-data.js"></script>
   <script src="js/storage.js"></script>
   <script src="js/app.js"></script>
-
   <script>
     let activeFavFilter = 'all';
 
-    function switchFavTab(tab) {
+    function switchFavTab(tabName) {
       document.querySelectorAll(".fav-section").forEach(s => s.style.display = "none");
-      const target = document.getElementById("tab-" + tab);
+      const target = document.getElementById("tab-" + tabName);
       if (target) target.style.display = "block";
 
       document.querySelectorAll("#favSubNav .selector-tab").forEach(t => t.classList.remove("active"));
-      if (event && event.target) event.target.classList.add("active");
+      if (event && event.currentTarget) event.currentTarget.classList.add("active");
     }
 
-    function filterFavs(type) {
-      activeFavFilter = type;
-      document.querySelectorAll(".fav-filter").forEach(f => f.classList.remove("active"));
-      if (event && event.target) event.target.classList.add("active");
+    function filterFavs(category) {
+      activeFavFilter = category;
+      document.querySelectorAll(".fav-filter").forEach(b => b.classList.remove("active"));
+      if (event && event.currentTarget) event.currentTarget.classList.add("active");
       renderFavorites();
     }
 
@@ -251,25 +216,26 @@
 
       if (list.length === 0) {
         grid.innerHTML = `
-          <div style="grid-column: 1/-1; text-align: center; padding: 48px 16px; color: var(--text-muted);">
+          <div style="grid-column: 1/-1; text-align: center; padding: 48px 16px; background: var(--bg-card); border-radius: var(--radius-xl); border: 1px solid var(--border-hairline);">
             <div style="font-size: 2.2rem; margin-bottom: 12px;">❤️</div>
-            <h4 style="color: var(--text-primary); margin-bottom: 6px;">لسه مفيش حاجة محفوظة هنا...</h4>
-            <p style="font-size: 0.9rem; margin-bottom: 18px;">يبقى نبدأ واحدة دلوقتي ونفتح موضوع سوا.</p>
-            <a href="topics.html" class="btn-primary" style="display: inline-flex;">
-              افتح موضوع ✦
-            </a>
+            <h4 style="color: var(--text-primary); margin-bottom: 6px;">لسه مفيش عناصر محفوظة في هذا القسم</h4>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 18px;">ابدأوا استكشاف المحتوى واضغطوا على زر ❤️ لحفظ ما يعجبكم.</p>
+            <button onclick="BetweenUsApp.openHatHaga()" class="btn-primary" style="display: inline-flex;">
+              🎲 هات حاجة واستكشف ✦
+            </button>
           </div>
         `;
         return;
       }
 
       const typeLabels = {
-        topic: "موضوع نقاش",
-        story: "قصة",
-        movie: "فيلم / مسلسل",
-        game: "لعبة",
+        topic: "💬 موضوع نقاش",
+        story: "📖 قصة",
+        movie: "🎬 فيلم / مسلسل",
+        game: "🎮 لعبة",
         riddle: "🧩 فزورة ولغز",
-        joke: "😂 نكتة وموقف"
+        joke: "😂 نكتة وموقف",
+        memory: "📸 ذكرى"
       };
 
       grid.innerHTML = list.map(item => `
@@ -285,12 +251,20 @@
             <button class="btn-secondary" onclick="openFavItem('${item.type}', '${item.id}')" style="min-height: 48px; padding: 0 18px; font-size: 0.92rem;">
               فتح المحتوى ←
             </button>
-            <button class="btn-card-action active" onclick="BetweenUsStorage.removeFavorite('${item.id}'); renderFavorites();" title="إزالة من المفضلة" style="width: 48px; height: 48px; min-width: 48px; min-height: 48px;">
+            <button class="btn-card-action active" onclick="confirmDeleteFavorite('${item.id}')" title="إزالة من المفضلة" style="width: 48px; height: 48px; min-width: 48px; min-height: 48px;">
               ❤️
             </button>
           </div>
         </div>
       `).join("");
+    }
+
+    function confirmDeleteFavorite(id) {
+      if (confirm("هل تريد إزالة هذا العنصر من المفضلة؟")) {
+        BetweenUsStorage.removeFavorite(id);
+        renderFavorites();
+        BetweenUsApp.showToast("تمت الإزالة من المفضلة");
+      }
     }
 
     function openFavItem(type, id) {
@@ -304,6 +278,8 @@
         window.location.href = `riddles.html`;
       } else if (type === 'joke') {
         window.location.href = `jokes.html`;
+      } else if (type === 'memory') {
+        window.location.href = `memories.html`;
       } else {
         window.location.href = `games.html`;
       }
@@ -316,7 +292,7 @@
 
       if (sessions.length === 0) {
         container.innerHTML = `
-          <div style="text-align: center; padding: 40px; color: var(--text-muted);">
+          <div style="text-align: center; padding: 40px; color: var(--text-muted); background: var(--bg-card); border-radius: var(--radius-xl); border: 1px solid var(--border-hairline);">
             <div style="font-size: 2rem; margin-bottom: 8px;">📜</div>
             <p>لا توجد جلسات حوارية مسجلة بعد. عند إتمام أي جلسة نقاش في صفحة المواضيع سيتم توثيقها هنا تلقائياً.</p>
           </div>
@@ -369,9 +345,9 @@
         const res = BetweenUsStorage.importData(ev.target.result);
         if (res.success) {
           BetweenUsApp.showToast("✓ تم استيراد البيانات بنجاح!");
-          setTimeout(() => window.location.reload(), 1000);
+          setTimeout(() => window.location.reload(), 800);
         } else {
-          BetweenUsApp.showToast("❌ ملف غير صالح");
+          BetweenUsApp.showToast("❌ صيغة الملف غير صحيحة");
         }
       };
       reader.readAsText(file);

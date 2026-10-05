@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>مواضيع للنقاش ♾️ Between Us</title>
-  <meta name="description" content="عشرات المواضيع الحوارية والأسئلة العميقة المصممة لفتح أبواب الحكايات الصادقة." />
+  <title>نتكلم (مواضيع وأسئلة) 💬 Between Us ♾️</title>
+  <meta name="description" content="عشرات المواضيع الحوارية والأسئلة العميقة المصممة لفتح أبواب الحكايات الصادقة بين الزوجين." />
   <meta name="theme-color" content="#121013" />
 
   <link rel="stylesheet" href="css/style.css" />
@@ -12,40 +12,40 @@
 </head>
 <body>
   <div class="app-wrapper">
-    <!-- Top Navigation Bar -->
+    <!-- Top Navigation Bar with Back Button -->
     <header class="top-nav">
       <div class="top-nav-inner">
-        <a href="index.html" class="nav-brand">
-          <span>Between Us</span>
-          <span class="brand-infinity">♾️</span>
-        </a>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <button class="btn-icon" onclick="BetweenUsApp.goBack()" title="رجوع" aria-label="رجوع">←</button>
+          <a href="index.html" class="nav-brand">
+            <span>Between Us</span>
+            <span class="brand-infinity">♾️</span>
+          </a>
+        </div>
 
         <nav class="nav-links">
           <a href="index.html" class="nav-link">الرئيسية</a>
-          <a href="topics.html" class="nav-link active">مواضيع</a>
-          <a href="riddles.html" class="nav-link">فوازير</a>
-          <a href="jokes.html" class="nav-link">نكت</a>
-          <a href="universes.html" class="nav-link">عوالم الحياة</a>
-          <a href="stories.html" class="nav-link">قصص</a>
-          <a href="games.html" class="nav-link">ألعاب</a>
-          <a href="movies.html" class="nav-link">أفلام</a>
-          <a href="memories.html" class="nav-link">ذكرياتنا</a>
-          <a href="favorites.html" class="nav-link">المفضلة</a>
+          <a href="topics.html" class="nav-link active">نتكلم</a>
+          <a href="games.html" class="nav-link">نلعب</a>
+          <a href="stories.html" class="nav-link">نحكي</a>
+          <a href="favorites.html" class="nav-link">المحفوظات</a>
         </nav>
 
         <div class="nav-actions">
+          <button class="btn-primary btn-surprise-trigger" data-filter="topic" style="min-height: 40px; padding: 0 14px; font-size: 0.85rem;">
+            🎲 هات موضوع
+          </button>
           <button class="btn-icon" data-open-modal="searchModal" title="بحث سريع" aria-label="بحث سريع">🔍</button>
           <button class="btn-icon" data-open-modal="addCustomModal" title="أضف من عندك" aria-label="أضف من عندك">➕</button>
-          <button class="btn-icon" data-open-modal="settingsModal" title="الإعدادات" aria-label="الإعدادات">⚙️</button>
-          <button class="btn-icon btn-menu-drawer-trigger" title="القائمة" aria-label="القائمة">☰</button>
+          <button class="btn-icon btn-menu-drawer-trigger" title="كل الأقسام" aria-label="كل الأقسام">☰</button>
         </div>
       </div>
     </header>
 
     <main class="page-container">
       <!-- Page Header -->
-      <div style="margin-bottom: 24px; text-align: center;">
-        <span style="font-size: 0.85rem; color: var(--accent-gold); font-weight: 600;">بوابة الحوار الصادق</span>
+      <div style="margin-bottom: 20px; text-align: center;">
+        <span style="font-size: 0.85rem; color: var(--accent-gold); font-weight: 600;">بوابة الحوار والتقارب</span>
         <h1 style="font-size: 1.85rem; margin: 4px 0 8px;">مواضيع نتكلم فيها 💬</h1>
         <p style="font-size: 0.95rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
           اختاروا الموضوع اللي ينادي قلوبكم الليلة، وكل بطاقة تحوي جلسة كاملة من الأسئلة المتدرجة بعمق.
@@ -53,12 +53,12 @@
       </div>
 
       <!-- Search Bar -->
-      <div class="form-group" style="max-width: 500px; margin: 0 auto 20px;">
+      <div class="form-group" style="max-width: 500px; margin: 0 auto 18px;">
         <input type="text" id="topicsSearchInput" class="form-input" placeholder="🔍 ابحث في عناوين المواضيع أو الكلمات الدلالية..." />
       </div>
 
       <!-- Category Filter Tabs -->
-      <div class="section-block" style="margin-bottom: 16px;">
+      <div class="section-block" style="margin-bottom: 18px;">
         <div class="pill-selector">
           <button class="selector-tab category-tab active" data-category="all">الكل (All)</button>
           <button class="selector-tab category-tab" data-category="about-us">❤️ عن بعض</button>
@@ -99,71 +99,94 @@
         <div class="session-progress-fill" id="sessionProgressFill"></div>
       </div>
 
+      <!-- Session Body -->
       <div class="session-body">
-        <div class="session-step-label" id="sessionStepLabel">السؤال 01 من 05</div>
+        <div class="session-step-label" id="sessionStepLabel">السؤال 1 من 5</div>
         <div class="session-question-text" id="sessionQuestionText">
-          السؤال يظهر هنا بخط واضح وأنيق...
+          السؤال يظهر هنا...
+        </div>
+        <div style="font-size: 0.85rem; color: var(--text-muted); font-style: italic;" id="sessionPartnerTurnText">
+          خذوا وقتكم في الإجابة والاستماع بإنصات كامل 🤍
         </div>
       </div>
 
+      <!-- Session Controls -->
       <div class="session-controls">
-        <button id="sessionPrevBtn" class="btn-secondary" style="min-height: 48px; min-width: 48px; padding: 0 18px;">
-          → السابق
+        <button id="sessionPrevBtn" class="btn-secondary" style="min-height: 48px; padding: 0 16px;">
+          ← السابق
         </button>
-
-        <div style="display: flex; gap: 10px; align-items: center;">
-          <button id="sessionFavBtn" class="btn-secondary" style="min-height: 48px; min-width: 48px; font-size: 0.9rem; padding: 0 16px;">
-            ♡ تفضيل
+        <div style="display: flex; gap: 8px;">
+          <button id="sessionFavBtn" class="btn-icon" title="حفظ الموضوع في المفضلة" style="width: 48px; height: 48px;">
+            ❤️
           </button>
-          <button id="sessionBookmarkBtn" class="btn-secondary" title="نتكلم فيه بعدين" style="min-height: 48px; min-width: 48px; font-size: 0.9rem; padding: 0 16px;">
-            📌 نتكلم فيه بعدين
+          <button id="sessionShareBtn" class="btn-icon" title="مشاركة السؤال" style="width: 48px; height: 48px;">
+            🔗
           </button>
         </div>
-
-        <button id="sessionNextBtn" class="btn-primary" style="min-height: 48px; min-width: 48px; padding: 0 20px;">
-          السؤال التالي ←
+        <button id="sessionNextBtn" class="btn-primary" style="min-height: 48px; padding: 0 20px;">
+          التالي →
         </button>
       </div>
     </div>
 
-    <!-- Mobile Bottom Navigation Bar -->
+    <!-- Session Completion Recap Modal -->
+    <div class="modal-overlay" id="sessionRecapModal">
+      <div class="modal-box" style="max-width: 600px; text-align: right;">
+        <div style="text-align: center; margin-bottom: 16px;">
+          <div style="font-size: 2.2rem; margin-bottom: 6px;">✨</div>
+          <span style="font-size: 0.85rem; color: var(--accent-gold); font-weight: 700;">اكتملت الجلسة الحوارية</span>
+          <h3 style="font-size: 1.35rem; color: var(--text-primary); margin: 6px 0;" id="recapTopicTitle">عنوان الموضوع</h3>
+          <p style="font-size: 0.9rem; color: var(--text-secondary);">لحظة تقارب جميلة توثق خطوة جديدة في حكايتكم.</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">كيف كان شعور الجلسة الليلة؟</label>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;" id="recapMoodOptions">
+            <button type="button" class="recap-mood-pill active" data-mood="دافئة ومطمئنة">❤️ دافئة ومطمئنة</button>
+            <button type="button" class="recap-mood-pill" data-mood="عميقة وملهمة">🧠 عميقة وملهمة</button>
+            <button type="button" class="recap-mood-pill" data-mood="مرحة وكلها ضحك">😂 مرحة وضحك</button>
+            <button type="button" class="recap-mood-pill" data-mood="صادقة وجريئة">🔥 صادقة وجريئة</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">خاطرة أو كلمة حلوة للتوثيق (اختياري)</label>
+          <textarea id="recapNotesInput" class="form-textarea" rows="3" placeholder="اكتبوا أي جملة أو فكرة عجبتكم في نقاش اليوم..."></textarea>
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+          <button type="button" class="btn-secondary" onclick="BetweenUsTopics.closeRecapModal()">تخطي</button>
+          <button type="button" class="btn-primary" onclick="BetweenUsTopics.saveSessionRecap()">حفظ وتوثيق الجلسة ✦</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Standard 5-Tab Mobile Bottom Navigation Bar -->
     <nav class="bottom-nav">
       <a href="index.html" class="bottom-nav-item">
-        <span class="bottom-nav-icon">⌂</span>
+        <span class="bottom-nav-icon">🏠</span>
         <span>الرئيسية</span>
       </a>
       <a href="topics.html" class="bottom-nav-item active">
         <span class="bottom-nav-icon">💬</span>
-        <span>مواضيع</span>
-      </a>
-      <a href="universes.html" class="bottom-nav-item">
-        <span class="bottom-nav-icon">🌌</span>
-        <span>عوالمنا</span>
-      </a>
-      <a href="stories.html" class="bottom-nav-item">
-        <span class="bottom-nav-icon">📚</span>
-        <span>قصص</span>
+        <span>نتكلم</span>
       </a>
       <a href="games.html" class="bottom-nav-item">
         <span class="bottom-nav-icon">🎮</span>
-        <span>ألعاب</span>
+        <span>نلعب</span>
       </a>
-      <a href="memories.html" class="bottom-nav-item">
-        <span class="bottom-nav-icon">📸</span>
-        <span>ذكريات</span>
+      <a href="stories.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">📚</span>
+        <span>نحكي</span>
       </a>
       <a href="favorites.html" class="bottom-nav-item">
-        <span class="bottom-nav-icon">♡</span>
-        <span>المفضلة</span>
+        <span class="bottom-nav-icon">❤️</span>
+        <span>المحفوظات</span>
       </a>
     </nav>
   </div>
 
-  <!-- Shared Modals (Search, Custom Content, Settings, Surprise) -->
-  <div class="modal-overlay" id="surpriseModal">
-    <div class="modal-box" id="surpriseModalContent"></div>
-  </div>
-
+  <!-- Shared Modals (Search, Custom Content, Settings) -->
   <div class="modal-overlay" id="searchModal">
     <div class="modal-box">
       <div class="modal-header">
@@ -231,8 +254,8 @@
       <div class="form-group">
         <label class="form-label">المظهر (Theme)</label>
         <select id="settingsTheme" class="form-select">
-          <option value="dark">داكن رومانسي (Charcoal & Burgundy)</option>
-          <option value="light">فاتح دافئ (Warm Ivory & Gold)</option>
+          <option value="dark">داكن رومانسي</option>
+          <option value="light">فاتح دافئ</option>
         </select>
       </div>
       <div class="form-group" style="flex-direction: row; align-items: center; justify-content: space-between;">
