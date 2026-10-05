@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>النكت والضحك 😂 Between Us</title>
+  <meta name="description" content="مكتبة ضخمة جداً من النكت المصرية والعربية، والمواقف الكوميدية، وتحدي مين هيضحك الأول!" />
+  <meta property="og:title" content="النكت والضحك 😂 Between Us" />
+  <meta property="og:description" content="مكتبة ضخمة جداً من النكت المصرية والعربية، والمواقف الكوميدية، وتحدي مين هيضحك الأول!" />
+  <meta name="theme-color" content="#121013" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Top Navigation Bar -->
+    <header class="top-nav">
+      <div class="top-nav-inner">
+        <a href="index.html" class="nav-brand">
+          <span>Between Us</span>
+          <span class="brand-infinity">♾️</span>
+        </a>
+
+        <nav class="nav-links">
+          <a href="index.html" class="nav-link">الرئيسية</a>
+          <a href="topics.html" class="nav-link">مواضيع</a>
+          <a href="universes.html" class="nav-link">عوالم الحياة</a>
+          <a href="stories.html" class="nav-link">قصص</a>
+          <a href="games.html" class="nav-link">ألعاب</a>
+          <a href="riddles.html" class="nav-link">فوازير</a>
+          <a href="jokes.html" class="nav-link active">نكت</a>
+          <a href="movies.html" class="nav-link">أفلام</a>
+          <a href="memories.html" class="nav-link">ذكرياتنا</a>
+          <a href="favorites.html" class="nav-link">المفضلة</a>
+        </nav>
+
+        <div class="nav-actions">
+          <button class="btn-primary" onclick="BetweenUsJokes.pickRandomJoke()" style="min-height: 48px; padding: 0 16px; font-size: 0.9rem;">
+            😂 اضحكنا
+          </button>
+          <button class="btn-icon" data-open-modal="searchModal" title="بحث سريع" aria-label="بحث سريع">
+            🔍
+          </button>
+          <button class="btn-icon" data-open-modal="settingsModal" title="الإعدادات" aria-label="الإعدادات">
+            ⚙️
+          </button>
+          <button class="btn-icon btn-menu-drawer-trigger" title="القائمة" aria-label="القائمة">
+            ☰
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="page-container">
+      <!-- Header Banner -->
+      <section style="margin-bottom: 24px; text-align: center;">
+        <span style="font-size: 0.85rem; color: var(--accent-gold); font-weight: 700;">واحة البهجة والضحك والروقان</span>
+        <h1 style="font-size: 1.85rem; margin: 4px 0 8px; color: var(--text-primary);">النكت والضحك 😂</h1>
+        <p style="font-size: 0.95rem; color: var(--text-secondary); max-width: 620px; margin: 0 auto 16px; line-height: 1.6;">
+          مئات النكت العائلية والمواقف المصرية الكوميدية، وDad jokes وتحدي 'مين هيضحك الأول؟' لجرعة ضحك يومية لا تنتهي.
+        </p>
+
+        <!-- Quick Action Buttons -->
+        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+          <button class="btn-primary" onclick="BetweenUsJokes.pickRandomJoke()" style="min-height: 48px; padding: 0 24px; font-size: 0.95rem;">
+            😂 اضحكنا (نكتة عشوائية)
+          </button>
+          <button class="btn-secondary" onclick="BetweenUsJokes.startJokeBattle()" style="min-height: 48px; padding: 0 20px; font-size: 0.92rem;">
+            🎭 لعبة: مين هيضحك الأول؟
+          </button>
+        </div>
+      </section>
+
+      <!-- 1. Daily Joke Card -->
+      <section class="section-block" style="margin-bottom: 20px;">
+        <div class="discovery-card" id="dailyJokeCard">
+          <!-- Populated by jokes.js -->
+        </div>
+      </section>
+
+      <!-- 2. Joke Battle Banner & Stats -->
+      <section class="section-block" style="margin-bottom: 20px;">
+        <div style="padding: 16px 20px; background: linear-gradient(135deg, rgba(104, 24, 38, 0.2) 0%, rgba(35, 31, 39, 0.95) 100%); border: 1px solid rgba(212, 122, 136, 0.3); border-radius: var(--radius-lg);" id="jokeBattleStatsContainer">
+          <!-- Populated by jokes.js -->
+        </div>
+      </section>
+
+      <!-- 3. Category Filter Tabs & Search -->
+      <section class="section-block" style="margin-bottom: 20px;">
+        <div class="form-group" style="margin-bottom: 14px;">
+          <input type="text" id="jokeSearchInput" class="form-input" placeholder="🔍 ابحث في النكت، المواقف، أو الكلمات (قهوة، سواقة، شغل...)" style="min-height: 48px;" />
+        </div>
+
+        <div class="pill-selector" id="jokeCategoryTabs">
+          <!-- Injected by jokes.js -->
+        </div>
+      </section>
+
+      <!-- 4. Main Jokes Feed -->
+      <section class="section-block">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+          <h2 class="section-title" id="jokesCountLabel">كل النكت والمواقف</h2>
+        </div>
+
+        <div id="jokesFeedContainer">
+          <!-- Injected dynamically by jokes.js -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p style="margin-bottom: 4px;">Between Us ♾️ — النكت والضحك</p>
+      <p style="font-size: 0.8rem; color: var(--text-muted);">
+        مخصص لـ <span class="partner-names-label">أحمد & إسراء</span> · ضحكتكم بالدنيا كلها
+      </p>
+    </footer>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+      <a href="index.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">⌂</span>
+        <span>الرئيسية</span>
+      </a>
+      <a href="topics.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">💬</span>
+        <span>مواضيع</span>
+      </a>
+      <a href="riddles.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">🧩</span>
+        <span>فوازير</span>
+      </a>
+      <a href="jokes.html" class="bottom-nav-item active">
+        <span class="bottom-nav-icon">😂</span>
+        <span>نكت</span>
+      </a>
+      <a href="games.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">🎮</span>
+        <span>ألعاب</span>
+      </a>
+      <a href="favorites.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">♡</span>
+        <span>المفضلة</span>
+      </a>
+    </nav>
+  </div>
+
+  <!-- MODALS -->
+
+  <!-- Random Joke Modal -->
+  <div class="modal-overlay" id="randomJokeModal">
+    <div class="modal-box" id="randomJokeModalContent">
+      <!-- Dynamic Content -->
+    </div>
+  </div>
+
+  <!-- Joke Battle Modal -->
+  <div class="modal-overlay" id="jokeBattleModal">
+    <div class="modal-box" id="jokeBattleModalContent" style="max-width: 600px;">
+      <!-- Dynamic Content -->
+    </div>
+  </div>
+
+  <!-- Global Search Modal -->
+  <div class="modal-overlay" id="searchModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">🔍 بحث في عالم بيننا</h3>
+        <button class="btn-icon" data-close-modal>✕</button>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-input global-search-input" placeholder="ابحث عن موضوع، فزورة، نكتة، قصة..." />
+      </div>
+      <div id="globalSearchResults" style="max-height: 50vh; overflow-y: auto;">
+        <div style="text-align: center; color: var(--text-muted); padding: 24px;">
+          اكتب كلمتين للبحث في كافة الأقسام...
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">⚙️ إعدادات بيننا (Settings)</h3>
+        <button class="btn-icon" data-close-modal>✕</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">اسم الطرف الأول</label>
+        <input type="text" id="settingsPartner1" class="form-input" value="أحمد" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">اسم الطرف الثاني</label>
+        <input type="text" id="settingsPartner2" class="form-input" value="إسراء" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">المظهر (Theme)</label>
+        <select id="settingsTheme" class="form-select">
+          <option value="dark">داكن رومانسي (Charcoal & Burgundy)</option>
+          <option value="light">فاتح دافئ (Warm Ivory & Gold)</option>
+        </select>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+        <button type="button" id="saveSettingsBtn" class="btn-primary">
+          حفظ التعديلات ✓
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Core Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/riddles-data.js"></script>
+  <script src="js/jokes-data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/jokes.js"></script>
+</body>
+</html>

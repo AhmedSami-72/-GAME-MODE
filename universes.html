@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>عوالم الحياة المشتركة ♾️ Between Us</title>
+  <meta name="description" content="إدارة البيت، ميزانية واقتصاد، تربية الأولاد، أفكار بيزنس، نطبخ إيه، مواقف الحياة، وألغاز التحقيق." />
+  <meta name="theme-color" content="#121013" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <div class="app-wrapper">
+    <header class="top-nav">
+      <div class="top-nav-inner">
+        <a href="index.html" class="nav-brand">
+          <span>Between Us</span>
+          <span class="brand-infinity">♾️</span>
+        </a>
+
+        <nav class="nav-links">
+          <a href="index.html" class="nav-link">الرئيسية</a>
+          <a href="topics.html" class="nav-link">مواضيع</a>
+          <a href="riddles.html" class="nav-link">فوازير</a>
+          <a href="jokes.html" class="nav-link">نكت</a>
+          <a href="universes.html" class="nav-link active">عوالم الحياة</a>
+          <a href="stories.html" class="nav-link">قصص</a>
+          <a href="games.html" class="nav-link">ألعاب</a>
+          <a href="movies.html" class="nav-link">أفلام</a>
+          <a href="memories.html" class="nav-link">ذكرياتنا</a>
+          <a href="favorites.html" class="nav-link">المفضلة</a>
+        </nav>
+
+        <div class="nav-actions">
+          <button class="btn-primary btn-evening-generator-trigger" style="min-height: 38px; padding: 0 14px; font-size: 0.85rem;">
+            🎲 اعمل لنا سهرة
+          </button>
+          <button class="btn-icon" data-open-modal="searchModal" title="بحث سريع" aria-label="بحث سريع">🔍</button>
+          <button class="btn-icon" data-open-modal="settingsModal" title="الإعدادات" aria-label="الإعدادات">⚙️</button>
+          <button class="btn-icon btn-menu-drawer-trigger" title="القائمة" aria-label="القائمة">☰</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-container">
+      <div style="margin-bottom: 24px; text-align: center;">
+        <span style="font-size: 0.85rem; color: var(--accent-gold); font-weight: 600;">منصة حياة كاملة للاتنين</span>
+        <h1 style="font-size: 1.85rem; margin: 4px 0 8px;">عوالم الحياة المشتركة 🌌</h1>
+        <p style="font-size: 0.95rem; color: var(--text-secondary); max-width: 620px; margin: 0 auto;">
+          أدوات عملية ونقاشات حقيقية وألعاب لإدارة كل ركن في حياتنا اليومية معاً: من البيت والميزانية إلى العمل وتربية الأطفال.
+        </p>
+      </div>
+
+      <!-- Universes Navigation Bar -->
+      <div class="section-block" style="margin-bottom: 24px;">
+        <div class="pill-selector" id="universesTabNav">
+          <button class="selector-tab universe-nav-tab active" data-tab="home">🏡 إدارة البيت</button>
+          <button class="selector-tab universe-nav-tab" data-tab="budget">💰 الميزانية والاقتصاد</button>
+          <button class="selector-tab universe-nav-tab" data-tab="parenting">👶 عائلة وتربية</button>
+          <button class="selector-tab universe-nav-tab" data-tab="business">💼 نشتغل سوا (Business)</button>
+          <button class="selector-tab universe-nav-tab" data-tab="cooking">🍳 نطبخ إيه؟</button>
+          <button class="selector-tab universe-nav-tab" data-tab="dilemmas">🧠 مواقف الحياة</button>
+          <button class="selector-tab universe-nav-tab" data-tab="detective">🕵️ سهرة التحقيق</button>
+          <button class="selector-tab universe-nav-tab" data-tab="roadmap">🌱 نبني حياتنا (Roadmap)</button>
+        </div>
+      </div>
+
+      <!-- 1. PANEL: HOME MANAGEMENT (إدارة البيت) -->
+      <section id="panel-home" class="universe-content-panel">
+        <!-- Interactive Game: Who Does It? -->
+        <div class="hero-card" style="margin-bottom: 24px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 16px;">
+            <div>
+              <div style="font-size: 0.82rem; color: var(--accent-gold); font-weight: 700;">لعبة تفاعلية للكوبلز</div>
+              <h2 style="font-size: 1.45rem; color: var(--text-primary); margin: 4px 0;">مين يعملها؟ 🎮 (تحدي تفاهم المسؤوليات)</h2>
+              <p style="font-size: 0.88rem; color: var(--text-secondary);">
+                كل واحد يختار في سره مين المفروض يعمل كل مهمة، وبعدين اضغطوا <strong>"اكشفوا الإجابات"</strong> عشان تشوفوا نقاط الاتفاق والضحك!
+              </p>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn-primary" id="btnRevealWhoDoesIt" onclick="BetweenUsUniverses.revealWhoDoesItGame()" style="min-height: 38px; font-size: 0.85rem;">
+                ✨ اكشفوا الإجابات والتوافق
+              </button>
+              <button class="btn-secondary" onclick="BetweenUsUniverses.resetWhoDoesItGame()" style="min-height: 38px; font-size: 0.85rem;">
+                🔄 إعادة اللعب
+              </button>
+            </div>
+          </div>
+
+          <!-- Comparison Result Box -->
+          <div id="whoDoesItResultBox" style="display: none; background: rgba(216, 178, 110, 0.1); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 16px; margin-bottom: 20px; text-align: center;"></div>
+
+          <div class="cards-grid" id="homeChoresList" style="margin-bottom: 20px;">
+            <!-- Populated by universes.js -->
+          </div>
+        </div>
+
+        <!-- Smart Cleaning Schedule -->
+        <div class="section-block" style="margin-bottom: 24px;">
+          <div class="section-header">
+            <h3 class="section-title">🧹 جدول التنظيف الذكي (Smart Cleaning Schedule)</h3>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">تقسيم يومي · أسبوعي · شهري</span>
+          </div>
+          <div id="cleaningScheduleWrap">
+            <!-- Populated by universes.js -->
+          </div>
+        </div>
+
+        <!-- Household Checklists & Organization -->
+        <div class="section-block" style="margin-bottom: 24px;">
+          <div class="section-header">
+            <h3 class="section-title">📋 قوائم وتجهيزات بيتنا الذكية</h3>
+            <span style="font-size: 0.85rem; color: var(--text-muted);">مشتريات · مطبخ · دولاب · رمضان والعيد</span>
+          </div>
+          <div id="checklistsWrap">
+            <!-- Populated by universes.js -->
+          </div>
+        </div>
+
+        <!-- Must Buy vs Can Skip -->
+        <div class="section-block" style="margin-bottom: 24px;">
+          <div class="section-header">
+            <h3 class="section-title">⚖️ حاجات لازم نشتريها vs حاجات نقدر نستغنى عنها</h3>
+          </div>
+          <div id="mustBuyVsCanSkipWrap">
+            <!-- Populated by universes.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. PANEL: BUDGET & SMART SHOPPING (الميزانية والاقتصاد) -->
+      <section id="panel-budget" class="universe-content-panel" style="display: none;">
+        <div class="hero-card" style="margin-bottom: 24px;">
+          <div style="text-align: center; margin-bottom: 16px;">
+            <div style="font-size: 0.82rem; color: var(--accent-gold); font-weight: 700;">حاسبة تفاعلية وتلقائية مع LocalStorage</div>
+            <h2 style="font-size: 1.45rem; color: var(--text-primary); margin: 4px 0;">ميزانية البيت الشهرية 📊 (نعيش أحسن بأقل)</h2>
+            <p style="font-size: 0.88rem; color: var(--text-secondary);">
+              اكتبوا دخلكم ومصروفاتكم وشوفوا الفائض والادخار واقتراحات تقليل البنود فورياً:
+            </p>
+          </div>
+
+          <form id="budgetCalculatorForm">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr)); gap: 14px; margin-bottom: 20px;">
+              <div class="form-group">
+                <label class="form-label">💰 الدخل الشهري الإجمالي (ج.م)</label>
+                <input type="number" id="budgetIncome" class="form-input" value="20000" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">🛒 الأكل والتموين والشرب</label>
+                <input type="number" id="budgetFood" class="form-input" value="5000" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">💡 الفواتير والنت والكهرباء والغاز</label>
+                <input type="number" id="budgetBills" class="form-input" value="2500" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">🚗 المواصلات والبنزين والمشاوير</label>
+                <input type="number" id="budgetTransport" class="form-input" value="1500" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">☕ الترفيه والخروجات والهدايا</label>
+                <input type="number" id="budgetEntertainment" class="form-input" value="1500" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">🏠 إيجار / أقساط / صيانة البيت</label>
+                <input type="number" id="budgetHome" class="form-input" value="3000" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">🛡️ صندوق الطوارئ الشهري</label>
+                <input type="number" id="budgetEmergency" class="form-input" value="2000" />
+              </div>
+            </div>
+
+            <!-- Auto Results Cards -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(130px, 100%), 1fr)); gap: 10px; margin-bottom: 20px;">
+              <div style="background: rgba(0, 0, 0, 0.25); border-radius: var(--radius-md); padding: 14px; text-align: center;">
+                <span style="font-size: 0.8rem; color: var(--text-muted);">إجمالي المصروفات</span>
+                <div id="calcTotalExpenses" style="font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 4px;">0 ج.م</div>
+              </div>
+              <div style="background: rgba(0, 0, 0, 0.25); border-radius: var(--radius-md); padding: 14px; text-align: center;">
+                <span style="font-size: 0.8rem; color: var(--text-muted);">الفائض والادخار</span>
+                <div id="calcSavings" style="font-size: 1.25rem; font-weight: 700; color: var(--accent-gold); margin-top: 4px;">0 ج.م</div>
+              </div>
+              <div style="background: rgba(0, 0, 0, 0.25); border-radius: var(--radius-md); padding: 14px; text-align: center;">
+                <span style="font-size: 0.8rem; color: var(--text-muted);">نسبة الادخار من الدخل</span>
+                <div id="calcSavingsPercent" style="font-size: 1.25rem; font-weight: 700; color: var(--accent-gold-light); margin-top: 4px;">0%</div>
+              </div>
+            </div>
+
+            <!-- "هل نقدر نوفر أكتر؟" - Auto suggestions based on numbers -->
+            <div id="budgetAdviceBox" style="background: rgba(216, 178, 110, 0.08); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 16px; margin-bottom: 16px;"></div>
+          </form>
+        </div>
+
+        <!-- 50/30/20 Rule & Emergency Fund Calculator -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 16px; margin-bottom: 24px;">
+          <!-- 50/30/20 Division -->
+          <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-hairline); border-radius: var(--radius-lg); padding: 18px;">
+            <div style="font-size: 0.8rem; color: var(--accent-gold); font-weight: 700;">تقسيم المرتب المثالي</div>
+            <h3 style="font-size: 1.15rem; color: var(--text-primary); margin: 4px 0 8px;">قاعدة الـ 50 / 30 / 20 🎯</h3>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 14px;">
+              توزيع مدروس لدخلكم الشهري لتحقيق التوازن بين راحة اليوم وأمان الغد:
+            </p>
+            <div id="rule503020Wrap" style="display: flex; flex-direction: column; gap: 8px;"></div>
+          </div>
+
+          <!-- Emergency Fund Calculator -->
+          <div style="background: var(--bg-surface-elevated); border: 1px solid var(--border-hairline); border-radius: var(--radius-lg); padding: 18px;">
+            <div style="font-size: 0.8rem; color: var(--accent-gold); font-weight: 700;">صمام أمان البيت</div>
+            <h3 style="font-size: 1.15rem; color: var(--text-primary); margin: 4px 0 8px;">صندوق الطوارئ (3 - 6 شهور) 🛡️</h3>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 14px;">
+              كم تحتاجان في صندوق الطوارئ لتغطية أي ظرف مفاجئ دون ديون؟
+            </p>
+            <div id="emergencyFundWrap"></div>
+          </div>
+        </div>
+
+        <!-- Wholesale Buys vs Money Wasters -->
+        <div id="wholesaleVsWastedWrap" style="margin-bottom: 24px;"></div>
+
+        <!-- Smart Shopping Decision Calculator -->
+        <div id="smartShoppingWrap" style="margin-bottom: 24px;"></div>
+
+        <!-- Savings Challenges: No-Spend Week -->
+        <div id="savingsChallengesWrap" style="margin-bottom: 24px;"></div>
+
+        <!-- Interactive 10,000 LE Scenario & Reflection -->
+        <div class="discovery-card" id="tenThousandScenarioCard">
+          <div class="discovery-kicker">💭 نقاش مالي بينكم (لو معانا 10,000 زيادة؟)</div>
+          <h3 style="font-size: 1.25rem; color: #FFFFFF; margin-bottom: 8px;">
+            لو دخلنا في شهر فيه 10,000 جنيه زيادة غير متوقعة.. نعمل بيهم إيه؟
+          </h3>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin-bottom: 16px;">
+            اختاروا بنظركم إيه الأنسب، وشوفوا سؤال النقاش المترتب على اختياركم:
+          </p>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;" id="tenThousandOptionsWrap">
+            <!-- Populated by universes.js -->
+          </div>
+          <div id="tenThousandReflectionBox" style="display: none; background: rgba(0,0,0,0.3); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 14px;"></div>
+        </div>
+      </section>
+
+      <!-- 3. PANEL: PARENTING & FUTURE CHILD (تربية الأولاد) -->
+      <section id="panel-parenting" class="universe-content-panel" style="display: none;">
+        <!-- Before Kids Deep Discussion Guide -->
+        <div class="hero-card" style="margin-bottom: 24px;">
+          <div style="text-align: center; margin-bottom: 16px;">
+            <div style="font-size: 0.82rem; color: var(--accent-gold); font-weight: 700;">محاور جوهرية قبل الأطفال</div>
+            <h2 style="font-size: 1.45rem; color: var(--text-primary); margin: 4px 0;">نقاشات "قبل الأطفال" 👶 (بناء رؤيتنا المشتركة)</h2>
+            <p style="font-size: 0.88rem; color: var(--text-secondary);">
+              الحزم والتدليل، المدارس، الخطوط الحمراء، اللغات، العقاب، والشاشات، وحماية حبنا:
+            </p>
+          </div>
+          <div id="parentingBeforeKidsWrap"></div>
+        </div>
+
+        <!-- Parenting Real-life Dilemmas -->
+        <div id="parentingScenariosWrap" style="margin-bottom: 24px;"></div>
+
+        <!-- Future Child Dreams Document -->
+        <div id="futureChildFormWrap"></div>
+      </section>
+
+      <!-- 4. PANEL: BUSINESS LAB (نشتغل سوا) -->
+      <section id="panel-business" class="universe-content-panel" style="display: none;">
+        <div id="businessLabWrap"></div>
+      </section>
+
+      <!-- 5. PANEL: COOKING GENERATOR (نطبخ إيه؟) -->
+      <section id="panel-cooking" class="universe-content-panel" style="display: none;">
+        <div id="cookingGeneratorWrap"></div>
+      </section>
+
+      <!-- 6. PANEL: LIFE DILEMMAS (مواقف الحياة) -->
+      <section id="panel-dilemmas" class="universe-content-panel" style="display: none;">
+        <div id="lifeDilemmasWrap"></div>
+      </section>
+
+      <!-- 7. PANEL: DETECTIVE NIGHT (سهرة التحقيق) -->
+      <section id="panel-detective" class="universe-content-panel" style="display: none;">
+        <div id="detectiveNightWrap"></div>
+      </section>
+
+      <!-- 8. PANEL: LIFE ROADMAP (نبني حياتنا) -->
+      <section id="panel-roadmap" class="universe-content-panel" style="display: none;">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <h2 style="font-size: 1.45rem; color: var(--text-primary); margin-bottom: 4px;">خارطة بناء حياتنا (7 مراحل)</h2>
+          <p style="font-size: 0.88rem; color: var(--text-secondary);">
+            محطات رحلتنا من البداية وحتى مرحلة الحصاد والسكينة المشتركة:
+          </p>
+        </div>
+        <div id="lifeRoadmapWrap"></div>
+      </section>
+    </main>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+      <a href="index.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">⌂</span>
+        <span>الرئيسية</span>
+      </a>
+      <a href="topics.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">💬</span>
+        <span>مواضيع</span>
+      </a>
+      <a href="universes.html" class="bottom-nav-item active">
+        <span class="bottom-nav-icon">🌌</span>
+        <span>عوالمنا</span>
+      </a>
+      <a href="games.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">🎮</span>
+        <span>ألعاب</span>
+      </a>
+      <a href="stories.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">📚</span>
+        <span>قصص</span>
+      </a>
+      <a href="memories.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">📸</span>
+        <span>ذكريات</span>
+      </a>
+    </nav>
+  </div>
+
+  <!-- ⭐ Evening Generator Modal (اعمل لنا سهرة) -->
+  <div class="modal-overlay" id="eveningGeneratorModal">
+    <div class="modal-box" style="max-width: 680px;" id="eveningModalContent">
+      <!-- Populated by universes.js -->
+    </div>
+  </div>
+
+  <!-- Shared Modals (Search, Custom Content, Settings) -->
+  <div class="modal-overlay" id="searchModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">🔍 بحث في عالم بيننا</h3>
+        <button class="btn-icon" data-close-modal>✕</button>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-input global-search-input" placeholder="ابحث في كل العوالم، الميزانية، المواقف..." />
+      </div>
+      <div id="globalSearchResults" style="max-height: 50vh; overflow-y: auto;"></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">⚙️ الإعدادات (Settings)</h3>
+        <button class="btn-icon" data-close-modal>✕</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">اسم الطرف الأول</label>
+        <input type="text" id="settingsPartner1" class="form-input" value="أحمد" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">اسم الطرف الثاني</label>
+        <input type="text" id="settingsPartner2" class="form-input" value="إسراء" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">المظهر (Theme)</label>
+        <select id="settingsTheme" class="form-select">
+          <option value="dark">داكن رومانسي</option>
+          <option value="light">فاتح دافئ</option>
+        </select>
+      </div>
+      <div style="border-top: 1px solid var(--border-hairline); margin: 18px 0; padding-top: 14px;">
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button type="button" id="exportDataBtn" class="btn-secondary" style="font-size: 0.85rem;">📥 تصدير البيانات</button>
+          <label class="btn-secondary" style="font-size: 0.85rem; cursor: pointer;">
+            📤 استيراد ملف
+            <input type="file" id="importDataInput" accept=".json" style="display: none;" />
+          </label>
+        </div>
+      </div>
+      <div style="border-top: 1px solid var(--border-hairline); margin-top: 14px; padding-top: 14px; display: flex; justify-content: space-between; align-items: center;">
+        <button type="button" id="resetDataBtn" style="color: var(--accent-rose); font-size: 0.85rem; text-decoration: underline;">إعادة ضبط</button>
+        <button type="button" id="saveSettingsBtn" class="btn-primary">حفظ ✓</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/riddles-data.js"></script>
+  <script src="js/jokes-data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/universes.js"></script>
+</body>
+</html>

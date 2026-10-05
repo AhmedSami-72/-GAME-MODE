@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>سينما ونقاشات ♾️ Between Us</title>
+  <meta name="description" content="نقاشات سينمائية عميقة، وفقرة 'لو قابلنا الشخصية دي' لأكثر من 20 فيلماً ومسلسلاً وشخصية ملهمة." />
+  <meta name="theme-color" content="#121013" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <div class="app-wrapper">
+    <header class="top-nav">
+      <div class="top-nav-inner">
+        <a href="index.html" class="nav-brand">
+          <span>Between Us</span>
+          <span class="brand-infinity">♾️</span>
+        </a>
+
+        <nav class="nav-links">
+          <a href="index.html" class="nav-link">الرئيسية</a>
+          <a href="topics.html" class="nav-link">مواضيع</a>
+          <a href="riddles.html" class="nav-link">فوازير</a>
+          <a href="jokes.html" class="nav-link">نكت</a>
+          <a href="universes.html" class="nav-link">عوالم الحياة</a>
+          <a href="stories.html" class="nav-link">قصص</a>
+          <a href="games.html" class="nav-link">ألعاب</a>
+          <a href="movies.html" class="nav-link active">أفلام</a>
+          <a href="memories.html" class="nav-link">ذكرياتنا</a>
+          <a href="favorites.html" class="nav-link">المفضلة</a>
+        </nav>
+
+        <div class="nav-actions">
+          <button class="btn-icon" data-open-modal="searchModal" title="بحث سريع" aria-label="بحث سريع">🔍</button>
+          <button class="btn-icon" data-open-modal="addCustomModal" title="أضف من عندك" aria-label="أضف من عندك">➕</button>
+          <button class="btn-icon" data-open-modal="settingsModal" title="الإعدادات" aria-label="الإعدادات">⚙️</button>
+          <button class="btn-icon btn-menu-drawer-trigger" title="القائمة" aria-label="القائمة">☰</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-container">
+      <div style="margin-bottom: 24px; text-align: center;">
+        <span style="font-size: 0.85rem; color: var(--accent-gold); font-weight: 600;">السينما في عيوننا</span>
+        <h1 style="font-size: 1.85rem; margin: 4px 0 8px;">أفلام ومسلسلات وشخصيات 🎬</h1>
+        <p style="font-size: 0.95rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
+          الأفلام مش مجرد فرجة… السينما مراية للحب والزمن والقرارات الصعبة. استكشفوا أسئلة حوارية عميقة لكل فيلم.
+        </p>
+      </div>
+
+      <!-- Feature: "لو قابلنا الشخصية دي..." -->
+      <section class="discovery-card" style="margin-bottom: 30px;">
+        <div class="discovery-kicker">🎭 فقرة خاصة · لو قابلنا الشخصية دي...</div>
+        <h2 style="font-size: 1.35rem; color: #FFFFFF; margin-bottom: 8px;" id="charEncounterTitle">
+          شيرلوك هولمز في 221B بيكر ستريت
+        </h2>
+        <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px;" id="charEncounterScenario">
+          تجلسان أمام المدفأة في لندن، وشيرلوك يكتشف 3 تفاصيل خفية عن علاقتكما بمجرد النظر!
+        </p>
+        <div style="background: rgba(0, 0, 0, 0.3); border-radius: var(--radius-md); padding: 12px 14px; margin-bottom: 16px; font-size: 0.95rem; color: var(--accent-gold); font-weight: 600;" id="charEncounterQuestion">
+          لو هيقول ملاحظة ذكية جداً ومحرجة عن علاقتنا، تتوقع هيقول إيه؟
+        </div>
+        <button class="btn-primary" onclick="randomizeCharacterEncounter()" style="min-height: 48px; min-width: 48px; padding: 0 22px; font-size: 0.95rem;">
+          🎲 شخصية تانية (Next Character)
+        </button>
+      </section>
+
+      <!-- Movies Grid -->
+      <div class="section-header">
+        <h2 class="section-title">🎞️ روائع سينمائية تستحق النقاش</h2>
+      </div>
+
+      <div class="cards-grid" id="moviesGrid">
+        <!-- Rendered by inline script from data.js -->
+      </div>
+    </main>
+
+    <!-- Movie Details / Discussion Modal -->
+    <div class="modal-overlay" id="movieModal">
+      <div class="modal-box" style="max-width: 680px;">
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 6px;">
+          <button class="btn-icon" data-close-modal>✕</button>
+        </div>
+        <div id="movieModalContent"></div>
+      </div>
+    </div>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+      <a href="index.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">⌂</span>
+        <span>الرئيسية</span>
+      </a>
+      <a href="topics.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">💬</span>
+        <span>مواضيع</span>
+      </a>
+      <a href="universes.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">🌌</span>
+        <span>عوالمنا</span>
+      </a>
+      <a href="stories.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">📚</span>
+        <span>قصص</span>
+      </a>
+      <a href="games.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">🎮</span>
+        <span>ألعاب</span>
+      </a>
+      <a href="memories.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">📸</span>
+        <span>ذكريات</span>
+      </a>
+      <a href="favorites.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">♡</span>
+        <span>المفضلة</span>
+      </a>
+    </nav>
+  </div>
+
+  <!-- Shared Modals -->
+  <div class="modal-overlay" id="surpriseModal">
+    <div class="modal-box" id="surpriseModalContent"></div>
+  </div>
+
+  <div class="modal-overlay" id="searchModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">🔍 بحث في عالم بيننا</h3>
+        <button class="btn-icon" data-close-modal>✕</button>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-input global-search-input" placeholder="ابحث عن موضوع، قصة، فيلم، أو كلمة..." />
+      </div>
+      <div id="globalSearchResults" style="max-height: 50vh; overflow-y: auto;"></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="addCustomModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">✨ أضف حاجة من عندك</h3>
+        <button class="btn-icon" data-close-modal>✕</button>
+      </div>
+      <form id="addCustomContentForm">
+        <div class="form-group">
+          <label class="form-label">نوع المشاركة</label>
+          <select id="customType" class="form-select">
+            <option value="movie">فيلم أو مسلسل</option>
+            <option value="topic">موضوع للنقاش</option>
+            <option value="question">سؤال خاص</option>
+            <option value="story">حكاية أو قصة</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">اسم الفيلم أو المسلسل</label>
+          <input type="text" id="customTitle" class="form-input" placeholder="مثال: The Notebook..." required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">القصة وأسئلة النقاش</label>
+          <textarea id="customText" class="form-textarea" rows="4" placeholder="ملخص سريع وأسئلة للنقاش..." required></textarea>
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+          <button type="button" class="btn-secondary" data-close-modal>إلغاء</button>
+          <button type="submit" class="btn-primary">حفظ في عالمنا ✦</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">⚙️ الإعدادات (Settings)</h3>
+        <button class="btn-icon" data-close-modal>✕</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">اسم الطرف الأول</label>
+        <input type="text" id="settingsPartner1" class="form-input" value="أحمد" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">اسم الطرف الثاني</label>
+        <input type="text" id="settingsPartner2" class="form-input" value="إسراء" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">المظهر (Theme)</label>
+        <select id="settingsTheme" class="form-select">
+          <option value="dark">داكن رومانسي</option>
+          <option value="light">فاتح دافئ</option>
+        </select>
+      </div>
+      <div style="border-top: 1px solid var(--border-hairline); margin: 18px 0; padding-top: 14px;">
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button type="button" id="exportDataBtn" class="btn-secondary" style="font-size: 0.85rem;">📥 تصدير البيانات</button>
+          <label class="btn-secondary" style="font-size: 0.85rem; cursor: pointer;">
+            📤 استيراد ملف
+            <input type="file" id="importDataInput" accept=".json" style="display: none;" />
+          </label>
+        </div>
+      </div>
+      <div style="border-top: 1px solid var(--border-hairline); margin-top: 14px; padding-top: 14px; display: flex; justify-content: space-between; align-items: center;">
+        <button type="button" id="resetDataBtn" style="color: var(--accent-rose); font-size: 0.85rem; text-decoration: underline;">إعادة ضبط</button>
+        <button type="button" id="saveSettingsBtn" class="btn-primary">حفظ ✓</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/riddles-data.js"></script>
+  <script src="js/jokes-data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+
+  <script>
+    // Render Movies
+    function renderMoviesList() {
+      const grid = document.getElementById("moviesGrid");
+      if (!grid || !window.BetweenUsData) return;
+      const movies = window.BetweenUsData.movies || [];
+
+      grid.innerHTML = movies.map(m => {
+        const isFav = window.BetweenUsStorage.isFavorite(m.id);
+        return `
+          <div class="topic-card" onclick="openMovieModal('${m.id}')">
+            <div>
+              <div class="topic-meta">
+                <span>${m.genre}</span>
+                <span>${m.year} · ${m.director}</span>
+              </div>
+              <h3 class="topic-title" style="margin-top: 8px;">${m.title}</h3>
+              <p class="topic-desc" style="margin-top: 6px;">${m.story}</p>
+            </div>
+            <div class="topic-footer" onclick="event.stopPropagation()" style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 14px;">
+              <button class="btn-primary" onclick="openMovieModal('${m.id}')" style="min-height: 48px; min-width: 48px; padding: 0 18px; font-size: 0.92rem;">
+                افتح أسئلة الفيلم 🎬
+              </button>
+              <button class="btn-card-action ${isFav ? 'active' : ''}" onclick="BetweenUsStorage.toggleFavorite({id: '${m.id}', type: 'movie', title: '${m.title}'}); renderMoviesList();" style="width: 48px; height: 48px; min-width: 48px; min-height: 48px;">
+                ${isFav ? '❤️' : '♡'}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function openMovieModal(movieId) {
+      const movies = window.BetweenUsData.movies || [];
+      const m = movies.find(item => item.id === movieId);
+      if (!m) return;
+
+      const content = document.getElementById("movieModalContent");
+      if (!content) return;
+
+      content.innerHTML = `
+        <div style="font-size: 0.82rem; color: var(--accent-gold); font-weight: 600; margin-bottom: 4px;">
+          ${m.genre} · ${m.year} · إخراج: ${m.director}
+        </div>
+        <h2 style="font-size: 1.5rem; color: var(--text-primary); margin-bottom: 10px;">${m.title}</h2>
+        <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 16px;">${m.story}</p>
+        
+        <div style="background: rgba(216, 178, 110, 0.08); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 12px 14px; margin-bottom: 20px;">
+          <div style="font-size: 0.82rem; color: var(--accent-gold); font-weight: 700; margin-bottom: 4px;">معلومة سينمائية ملهمة:</div>
+          <p style="font-size: 0.88rem; color: var(--text-primary); line-height: 1.5;">${m.interestingFacts}</p>
+        </div>
+
+        <h3 style="font-size: 1.1rem; color: var(--text-primary); margin-bottom: 12px;">💬 أسئلة نقاش بينكم عن الفيلم:</h3>
+        <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px;">
+          ${(m.questions || []).map((q, idx) => `
+            <div style="padding: 12px 14px; background: var(--bg-surface-elevated); border: 1px solid var(--border-hairline); border-radius: var(--radius-md); font-size: 0.92rem; color: var(--text-primary); line-height: 1.5;">
+              <strong style="color: var(--accent-gold);">${idx + 1}.</strong> ${q}
+            </div>
+          `).join("")}
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: center;">
+          <button class="btn-primary" onclick="BetweenUsStorage.addToTalk('${m.title}', 'سينما'); BetweenUsApp.showToast('📌 تم الحفظ في نتكلم فيه بعدين');">
+            📌 نتكلم فيه في سهرة الفيلم
+          </button>
+        </div>
+      `;
+
+      BetweenUsApp.openModal("movieModal");
+    }
+
+    // Character Encounters Randomizer
+    let charIndex = 0;
+    function randomizeCharacterEncounter() {
+      const chars = window.BetweenUsData.characterEncounters || [];
+      if (chars.length === 0) return;
+      charIndex = (charIndex + 1) % chars.length;
+      const c = chars[charIndex];
+
+      document.getElementById("charEncounterTitle").textContent = `${c.character} (${c.from})`;
+      document.getElementById("charEncounterScenario").textContent = c.scenario;
+      document.getElementById("charEncounterQuestion").textContent = c.question;
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      renderMoviesList();
+      randomizeCharacterEncounter();
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get("id");
+      if (id) {
+        setTimeout(() => openMovieModal(id), 250);
+      }
+    });
+  </script>
+</body>
+</html>

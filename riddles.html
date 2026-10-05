@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>الفوازير والألغاز 🧩 Between Us</title>
+  <meta name="description" content="عالم ضخم من الفوازير، الألغاز المنطقية، قضايا التحقيق، والألعاب الفكرية للاتنين." />
+  <meta property="og:title" content="الفوازير والألغاز 🧩 Between Us" />
+  <meta property="og:description" content="عالم ضخم من الفوازير، الألغاز المنطقية، قضايا التحقيق، والألعاب الفكرية للاتنين." />
+  <meta name="theme-color" content="#121013" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <div class="app-wrapper">
+    <!-- Top Navigation Bar -->
+    <header class="top-nav">
+      <div class="top-nav-inner">
+        <a href="index.html" class="nav-brand">
+          <span>Between Us</span>
+          <span class="brand-infinity">♾️</span>
+        </a>
+
+        <nav class="nav-links">
+          <a href="index.html" class="nav-link">الرئيسية</a>
+          <a href="topics.html" class="nav-link">مواضيع</a>
+          <a href="universes.html" class="nav-link">عوالم الحياة</a>
+          <a href="stories.html" class="nav-link">قصص</a>
+          <a href="games.html" class="nav-link">ألعاب</a>
+          <a href="riddles.html" class="nav-link active">فوازير</a>
+          <a href="jokes.html" class="nav-link">نكت</a>
+          <a href="movies.html" class="nav-link">أفلام</a>
+          <a href="memories.html" class="nav-link">ذكرياتنا</a>
+          <a href="favorites.html" class="nav-link">المفضلة</a>
+        </nav>
+
+        <div class="nav-actions">
+          <button class="btn-primary" onclick="BetweenUsRiddles.startGameMode()" style="min-height: 48px; padding: 0 16px; font-size: 0.9rem;">
+            🎮 العب الفوازير
+          </button>
+          <button class="btn-icon" data-open-modal="searchModal" title="بحث سريع" aria-label="بحث سريع">
+            🔍
+          </button>
+          <button class="btn-icon" data-open-modal="settingsModal" title="الإعدادات" aria-label="الإعدادات">
+            ⚙️
+          </button>
+          <button class="btn-icon btn-menu-drawer-trigger" title="القائمة" aria-label="القائمة">
+            ☰
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="page-container">
+      <!-- Header Banner -->
+      <section style="margin-bottom: 24px; text-align: center;">
+        <span style="font-size: 0.85rem; color: var(--accent-gold); font-weight: 700;">ساحة التحدي والتفكير للاتنين</span>
+        <h1 style="font-size: 1.85rem; margin: 4px 0 8px; color: var(--text-primary);">الفوازير والألغاز 🧩</h1>
+        <p style="font-size: 0.95rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto 16px; line-height: 1.6;">
+          أكثر من 150 فزورة ذكية ولغزاً منطقياً وقضية تحقيق، مع نظام تلميحات ذكي، وسلسلة فوازير لحفظ إنجازاتكما!
+        </p>
+
+        <!-- Quick Header Action Buttons -->
+        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+          <button class="btn-primary" onclick="BetweenUsRiddles.startGameMode()" style="min-height: 48px; padding: 0 22px; font-size: 0.95rem;">
+            🎮 العب الفوازير (10 جولات)
+          </button>
+          <button class="btn-secondary" onclick="BetweenUsRiddles.pickRandomRiddle()" style="min-height: 48px; padding: 0 18px; font-size: 0.92rem;">
+            🎲 فزورة عشوائية
+          </button>
+        </div>
+      </section>
+
+      <!-- 1. Daily Riddle Card -->
+      <section class="section-block" style="margin-bottom: 20px;">
+        <div class="discovery-card" id="dailyRiddleCard">
+          <!-- Populated by riddles.js -->
+        </div>
+      </section>
+
+      <!-- 2. Riddle Streak Banner -->
+      <section class="section-block" style="margin-bottom: 20px;">
+        <div style="padding: 16px 20px; background: linear-gradient(135deg, rgba(216, 178, 110, 0.12) 0%, rgba(35, 31, 39, 0.95) 100%); border: 1px solid var(--border-subtle); border-radius: var(--radius-lg);" id="riddleStreakBanner">
+          <!-- Populated by riddles.js -->
+        </div>
+      </section>
+
+      <!-- 3. Detective Case of the Night ("قضية الليلة") -->
+      <section class="section-block" style="margin-bottom: 24px;">
+        <div class="topic-card" id="detectiveCaseContainer" style="background: linear-gradient(135deg, rgba(104, 24, 38, 0.25) 0%, rgba(25, 22, 27, 0.95) 100%); border-color: rgba(212, 122, 136, 0.35); cursor: default;">
+          <!-- Populated by riddles.js -->
+        </div>
+      </section>
+
+      <!-- 4. Category Filter Tabs & Search -->
+      <section class="section-block" style="margin-bottom: 20px;">
+        <div class="form-group" style="margin-bottom: 14px;">
+          <input type="text" id="riddleSearchInput" class="form-input" placeholder="🔍 ابحث في الفوازير، الألغاز، الشرح، أو الكلمات الدلالية..." style="min-height: 48px;" />
+        </div>
+
+        <div class="pill-selector" id="riddleCategoryTabs">
+          <!-- Injected by riddles.js -->
+        </div>
+      </section>
+
+      <!-- 5. Main Riddles List -->
+      <section class="section-block">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+          <h2 class="section-title" id="riddlesCountLabel">قائمة الفوازير والألغاز</h2>
+        </div>
+
+        <div id="riddles-list" class="riddles-list-container">
+          <!-- Injected dynamically by riddles.js -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p style="margin-bottom: 4px;">Between Us ♾️ — الفوازير والألغاز</p>
+      <p style="font-size: 0.8rem; color: var(--text-muted);">
+        مخصص لـ <span class="partner-names-label">أحمد & إسراء</span> · فكروا واضحكوا سوا
+      </p>
+    </footer>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+      <a href="index.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">⌂</span>
+        <span>الرئيسية</span>
+      </a>
+      <a href="topics.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">💬</span>
+        <span>مواضيع</span>
+      </a>
+      <a href="riddles.html" class="bottom-nav-item active">
+        <span class="bottom-nav-icon">🧩</span>
+        <span>فوازير</span>
+      </a>
+      <a href="jokes.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">😂</span>
+        <span>نكت</span>
+      </a>
+      <a href="games.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">🎮</span>
+        <span>ألعاب</span>
+      </a>
+      <a href="favorites.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">♡</span>
+        <span>المفضلة</span>
+      </a>
+    </nav>
+  </div>
+
+  <!-- MODALS -->
+
+  <!-- Random Riddle Modal -->
+  <div class="modal-overlay" id="randomRiddleModal">
+    <div class="modal-box" id="randomRiddleModalContent">
+      <!-- Dynamic Content -->
+    </div>
+  </div>
+
+  <!-- Riddle Game Mode Modal -->
+  <div class="modal-overlay" id="riddleGameModal">
+    <div class="modal-box" id="riddleGameModalContent" style="max-width: 620px;">
+      <!-- Dynamic Content -->
+    </div>
+  </div>
+
+  <!-- Global Search Modal -->
+  <div class="modal-overlay" id="searchModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">🔍 بحث في عالم بيننا</h3>
+        <button class="btn-icon" data-close-modal>✕</button>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-input global-search-input" placeholder="ابحث عن موضوع، فزورة، نكتة، قصة..." />
+      </div>
+      <div id="globalSearchResults" style="max-height: 50vh; overflow-y: auto;">
+        <div style="text-align: center; color: var(--text-muted); padding: 24px;">
+          اكتب كلمتين للبحث في كافة الأقسام...
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">⚙️ إعدادات بيننا (Settings)</h3>
+        <button class="btn-icon" data-close-modal>✕</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">اسم الطرف الأول</label>
+        <input type="text" id="settingsPartner1" class="form-input" value="أحمد" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">اسم الطرف الثاني</label>
+        <input type="text" id="settingsPartner2" class="form-input" value="إسراء" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">المظهر (Theme)</label>
+        <select id="settingsTheme" class="form-select">
+          <option value="dark">داكن رومانسي (Charcoal & Burgundy)</option>
+          <option value="light">فاتح دافئ (Warm Ivory & Gold)</option>
+        </select>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+        <button type="button" id="saveSettingsBtn" class="btn-primary">
+          حفظ التعديلات ✓
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Core Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/riddles-data.js"></script>
+  <script src="js/jokes-data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/riddles.js"></script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>عالم القصص والأساطير ♾️ Between Us</title>
+  <meta name="description" content="قصص دينية موثوقة، وأساطير عالمية، وحكايات وفاء ملهمة مع أسئلة نقاش: 'لو كنت مكان الشخصية؟'." />
+  <meta name="theme-color" content="#121013" />
+
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <div class="app-wrapper">
+    <header class="top-nav">
+      <div class="top-nav-inner">
+        <a href="index.html" class="nav-brand">
+          <span>Between Us</span>
+          <span class="brand-infinity">♾️</span>
+        </a>
+
+        <nav class="nav-links">
+          <a href="index.html" class="nav-link">الرئيسية</a>
+          <a href="topics.html" class="nav-link">مواضيع</a>
+          <a href="riddles.html" class="nav-link">فوازير</a>
+          <a href="jokes.html" class="nav-link">نكت</a>
+          <a href="universes.html" class="nav-link">عوالم الحياة</a>
+          <a href="stories.html" class="nav-link active">قصص</a>
+          <a href="games.html" class="nav-link">ألعاب</a>
+          <a href="movies.html" class="nav-link">أفلام</a>
+          <a href="memories.html" class="nav-link">ذكرياتنا</a>
+          <a href="favorites.html" class="nav-link">المفضلة</a>
+        </nav>
+
+        <div class="nav-actions">
+          <button class="btn-icon" data-open-modal="searchModal" title="بحث سريع" aria-label="بحث سريع">🔍</button>
+          <button class="btn-icon" data-open-modal="addCustomModal" title="أضف من عندك" aria-label="أضف من عندك">➕</button>
+          <button class="btn-icon" data-open-modal="settingsModal" title="الإعدادات" aria-label="الإعدادات">⚙️</button>
+          <button class="btn-icon btn-menu-drawer-trigger" title="القائمة" aria-label="القائمة">☰</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-container">
+      <div style="margin-bottom: 24px; text-align: center;">
+        <span style="font-size: 0.85rem; color: var(--accent-gold); font-weight: 600;">ديوان الحكايات الخالدة</span>
+        <h1 style="font-size: 1.85rem; margin: 4px 0 8px;">عالم القصص والأساطير 📚</h1>
+        <p style="font-size: 0.95rem; color: var(--text-secondary); max-width: 600px; margin: 0 auto;">
+          اقرأوا القصة بصوت هادئ، واكتشفوا في نهايتها فقرة: "طيب لو كنت مكان الشخصية؟" ومجموعة أسئلة للنقاش.
+        </p>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="form-group" style="max-width: 500px; margin: 0 auto 20px;">
+        <input type="text" id="storiesSearchInput" class="form-input" placeholder="🔍 ابحث في عناوين القصص، الشخصيات، أو المصادر..." />
+      </div>
+
+      <!-- Categories Filter Tabs -->
+      <div class="section-block" style="margin-bottom: 20px;">
+        <div class="pill-selector">
+          <button class="selector-tab story-tab active" data-category="all">الكل (All)</button>
+          <button class="selector-tab story-tab" data-category="religious">🕌 قصص دينية موثوقة</button>
+          <button class="selector-tab story-tab" data-category="mythology">🏛️ أساطير عالمية</button>
+          <button class="selector-tab story-tab" data-category="history">🌍 قصص تاريخية</button>
+          <button class="selector-tab story-tab" data-category="love">❤️ قصص حب ووفاء</button>
+          <button class="selector-tab story-tab" data-category="inspirational">✨ قصص ملهمة</button>
+          <button class="selector-tab story-tab" data-category="bedtime">🌙 قبل النوم</button>
+          <button class="selector-tab story-tab" data-category="mystery">👻 ألغاز وغموض</button>
+        </div>
+      </div>
+
+      <!-- Stories Grid -->
+      <div class="cards-grid" id="storiesGrid">
+        <!-- Rendered by js/stories.js -->
+      </div>
+    </main>
+
+    <!-- Story Reader Modal -->
+    <div class="modal-overlay" id="storyReaderModal">
+      <div class="modal-box" style="max-width: 720px; max-height: 88vh;">
+        <div style="display: flex; justify-content: flex-end; margin-bottom: 8px;">
+          <button class="btn-icon" onclick="BetweenUsStories.closeStoryReader()">✕</button>
+        </div>
+        <div id="storyReaderContent">
+          <!-- Populated by js/stories.js -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+      <a href="index.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">⌂</span>
+        <span>الرئيسية</span>
+      </a>
+      <a href="topics.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">💬</span>
+        <span>مواضيع</span>
+      </a>
+      <a href="universes.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">🌌</span>
+        <span>عوالمنا</span>
+      </a>
+      <a href="stories.html" class="bottom-nav-item active">
+        <span class="bottom-nav-icon">📚</span>
+        <span>قصص</span>
+      </a>
+      <a href="games.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">🎮</span>
+        <span>ألعاب</span>
+      </a>
+      <a href="memories.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">📸</span>
+        <span>ذكريات</span>
+      </a>
+      <a href="favorites.html" class="bottom-nav-item">
+        <span class="bottom-nav-icon">♡</span>
+        <span>المفضلة</span>
+      </a>
+    </nav>
+  </div>
+
+  <!-- Shared Modals -->
+  <div class="modal-overlay" id="surpriseModal">
+    <div class="modal-box" id="surpriseModalContent"></div>
+  </div>
+
+  <div class="modal-overlay" id="searchModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">🔍 بحث في عالم بيننا</h3>
+        <button class="btn-icon" data-close-modal>✕</button>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-input global-search-input" placeholder="ابحث عن موضوع، قصة، فيلم، أو كلمة..." />
+      </div>
+      <div id="globalSearchResults" style="max-height: 50vh; overflow-y: auto;"></div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="addCustomModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">✨ أضف حاجة من عندك</h3>
+        <button class="btn-icon" data-close-modal>✕</button>
+      </div>
+      <form id="addCustomContentForm">
+        <div class="form-group">
+          <label class="form-label">نوع المشاركة</label>
+          <select id="customType" class="form-select">
+            <option value="story">قصة أو حكاية</option>
+            <option value="topic">موضوع للنقاش</option>
+            <option value="question">سؤال خاص</option>
+            <option value="memory">ذكرى شخصية</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">عنوان القصة</label>
+          <input type="text" id="customTitle" class="form-input" placeholder="عنوان القصة..." required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">نص القصة والعبر</label>
+          <textarea id="customText" class="form-textarea" rows="5" placeholder="اكتب تفاصيل القصة هنا..." required></textarea>
+        </div>
+        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+          <button type="button" class="btn-secondary" data-close-modal>إلغاء</button>
+          <button type="submit" class="btn-primary">حفظ في عالمنا ✦</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="settingsModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 class="modal-title">⚙️ الإعدادات (Settings)</h3>
+        <button class="btn-icon" data-close-modal>✕</button>
+      </div>
+      <div class="form-group">
+        <label class="form-label">اسم الطرف الأول</label>
+        <input type="text" id="settingsPartner1" class="form-input" value="أحمد" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">اسم الطرف الثاني</label>
+        <input type="text" id="settingsPartner2" class="form-input" value="إسراء" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">المظهر (Theme)</label>
+        <select id="settingsTheme" class="form-select">
+          <option value="dark">داكن رومانسي</option>
+          <option value="light">فاتح دافئ</option>
+        </select>
+      </div>
+      <div style="border-top: 1px solid var(--border-hairline); margin: 18px 0; padding-top: 14px;">
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button type="button" id="exportDataBtn" class="btn-secondary" style="font-size: 0.85rem;">📥 تصدير البيانات</button>
+          <label class="btn-secondary" style="font-size: 0.85rem; cursor: pointer;">
+            📤 استيراد ملف
+            <input type="file" id="importDataInput" accept=".json" style="display: none;" />
+          </label>
+        </div>
+      </div>
+      <div style="border-top: 1px solid var(--border-hairline); margin-top: 14px; padding-top: 14px; display: flex; justify-content: space-between; align-items: center;">
+        <button type="button" id="resetDataBtn" style="color: var(--accent-rose); font-size: 0.85rem; text-decoration: underline;">إعادة ضبط</button>
+        <button type="button" id="saveSettingsBtn" class="btn-primary">حفظ ✓</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/riddles-data.js"></script>
+  <script src="js/jokes-data.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/stories.js"></script>
+</body>
+</html>

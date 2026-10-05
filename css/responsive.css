@@ -1,0 +1,835 @@
+/* ============================================================
+   Between Us ♾️ - Production Mobile-First Responsive System
+   Target Mobile Breakpoints: 320px, 360px, 375px, 390px, 393px, 412px, 430px
+   Tablet & Desktop Breakpoints: 768px, 1024px, 1440px
+   Uniform 48px Minimum Touch Target Size & Ergonomic Thumb Spacing
+   ============================================================ */
+
+:root {
+  --sat: env(safe-area-inset-top, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+  --nav-mobile-height: 66px;
+  --header-mobile-height: 60px;
+}
+
+/* ============================================================
+   1. GLOBAL MOBILE-FIRST BASELINE (< 768px)
+   ============================================================ */
+@media (max-width: 767px) {
+  html, body {
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden !important;
+    position: relative;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Full Viewport App Wrapper */
+  .app-wrapper {
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    /* Generous bottom padding to account for fixed bottom nav + safe area */
+    padding-bottom: calc(var(--nav-mobile-height) + var(--sab) + 16px) !important;
+  }
+
+  /* Page Container Fluid Bounds */
+  .page-container {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px !important;
+    padding-left: max(14px, var(--sal)) !important;
+    padding-right: max(14px, var(--sar)) !important;
+    overflow-x: hidden;
+  }
+
+  /* Top Navigation Bar: App-like with Safe Area Top */
+  .top-nav {
+    height: calc(var(--header-mobile-height) + var(--sat));
+    padding-top: var(--sat);
+    padding-left: max(10px, var(--sal));
+    padding-right: max(10px, var(--sar));
+    background: rgba(25, 22, 27, 0.92);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border-hairline);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  [data-theme="light"] .top-nav {
+    background: rgba(255, 255, 255, 0.94);
+  }
+
+  .top-nav-inner {
+    height: var(--header-mobile-height);
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .nav-links {
+    display: none !important; /* Replaced by Bottom Nav & Menu Drawer on mobile */
+  }
+
+  .nav-brand {
+    font-size: 1.15rem;
+    gap: 8px;
+    min-width: 0;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .nav-brand span:first-child {
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .nav-actions {
+    gap: 8px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Icon Buttons: 48px x 48px Minimum Touch Target */
+  .btn-icon {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    border-radius: var(--radius-md);
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  /* Fixed Bottom Navigation: Native App Dock */
+  .bottom-nav {
+    display: flex !important;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 130;
+    background: rgba(22, 19, 24, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border-hairline);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.45);
+    height: calc(var(--nav-mobile-height) + var(--sab));
+    padding: 2px 4px var(--sab) 4px;
+    align-items: stretch;
+    justify-content: space-around;
+  }
+
+  [data-theme="light"] .bottom-nav {
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .bottom-nav-item {
+    flex: 1;
+    min-width: 48px;
+    min-height: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    height: 100%;
+    padding: 4px 2px;
+    color: var(--text-muted);
+    transition: color 0.15s ease, transform 0.15s ease;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .bottom-nav-item:active {
+    transform: scale(0.92);
+  }
+
+  .bottom-nav-item.active {
+    color: var(--accent-gold);
+    font-weight: 700;
+  }
+
+  .bottom-nav-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 24px;
+  }
+
+  .bottom-nav-item span:not(.bottom-nav-icon) {
+    font-size: clamp(0.62rem, 2.3vw, 0.72rem);
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .bottom-nav-item.active::after {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 4px;
+    border-radius: var(--radius-full);
+    background: var(--accent-gold);
+    margin-top: 1px;
+  }
+
+  /* Hero Section for Mobile */
+  .hero-card {
+    padding: 22px 16px !important;
+    border-radius: var(--radius-lg);
+    margin-bottom: 20px;
+    gap: 14px;
+  }
+
+  .hero-greeting {
+    font-size: 0.88rem;
+    margin-bottom: 4px;
+  }
+
+  .hero-title {
+    font-size: clamp(1.45rem, 5.5vw, 1.85rem) !important;
+    line-height: 1.3;
+    margin-bottom: 6px;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(0.86rem, 3.3vw, 0.98rem) !important;
+    line-height: 1.55;
+    margin-bottom: 16px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px !important; /* Generous thumb spacing */
+  }
+
+  .hero-actions .btn-primary,
+  .hero-actions .btn-secondary {
+    width: 100% !important;
+    min-height: 48px !important;
+    min-width: 48px !important;
+    font-size: 1rem;
+    justify-content: center;
+  }
+
+  /* Quick Access Doors Grid */
+  .quick-doors-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 10px !important;
+    margin-top: 12px;
+  }
+
+  .quick-door-btn {
+    min-height: 68px !important;
+    min-width: 48px !important;
+    padding: 10px 4px;
+    border-radius: var(--radius-md);
+    font-size: 0.82rem;
+    gap: 6px;
+  }
+
+  .quick-door-icon {
+    font-size: 1.3rem;
+  }
+
+  /* Bento Cards Grid on Mobile */
+  .cards-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  .topic-card {
+    padding: 18px;
+    border-radius: var(--radius-md);
+  }
+
+  .topic-title {
+    font-size: 1.05rem;
+    line-height: 1.35;
+  }
+
+  .topic-desc {
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  /* Pill & Category Selectors: Touch Swipe Scroller with 48px targets */
+  .pill-selector {
+    padding-bottom: 8px;
+    gap: 10px !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    margin: 0 -14px 16px -14px;
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .selector-tab {
+    scroll-snap-align: start;
+    flex-shrink: 0;
+    min-height: 48px !important;
+    min-width: 48px !important;
+    padding: 10px 18px !important;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border-radius: var(--radius-full);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Mood Pills / Option Pills Uniform 48px Touch Target */
+  .recap-mood-pill {
+    min-height: 48px !important;
+    min-width: 48px !important;
+    padding: 10px 18px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px;
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+
+  /* Card Action Buttons (Favorite / Bookmark / Priority) */
+  .btn-card-action {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* Native Mobile Bottom Sheet Modals */
+  .modal-overlay {
+    align-items: flex-end !important;
+    padding: 0 !important;
+    background: rgba(8, 6, 10, 0.78);
+  }
+
+  .modal-box {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 24px 24px 0 0 !important;
+    max-height: calc(88dvh - var(--sat)) !important;
+    padding: 20px 18px calc(24px + var(--sab)) !important;
+    margin: 0 !important;
+    transform: translateY(100%) !important;
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    position: relative;
+    border-bottom: none !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Sheet Drag Handle Indicator */
+  .modal-box::before {
+    content: '';
+    display: block;
+    width: 44px;
+    height: 5px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    margin: -8px auto 14px auto;
+  }
+
+  [data-theme="light"] .modal-box::before {
+    background: rgba(0, 0, 0, 0.15);
+  }
+
+  .modal-overlay.active .modal-box {
+    transform: translateY(0) !important;
+  }
+
+  .modal-header {
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+  }
+
+  .modal-title {
+    font-size: 1.15rem;
+  }
+
+  /* Fullscreen Conversation Session on Mobile */
+  .session-modal {
+    height: 100vh;
+    height: 100dvh;
+    max-height: 100dvh;
+    padding-top: var(--sat);
+    padding-bottom: var(--sab);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .session-header {
+    height: 60px;
+    padding: 0 14px;
+    flex-shrink: 0;
+  }
+
+  .session-progress-bar {
+    top: calc(59px + var(--sat));
+  }
+
+  .session-body {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 18px !important;
+    justify-content: flex-start !important;
+  }
+
+  .session-category-badge {
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+  }
+
+  .session-step-label {
+    font-size: 0.78rem;
+    margin-bottom: 14px;
+  }
+
+  .session-question-text {
+    font-size: clamp(1.2rem, 5.2vw, 1.55rem) !important;
+    line-height: 1.5;
+    margin-bottom: 18px;
+    padding: 0 4px;
+  }
+
+  /* Session Controls: 48px Touch Targets with Ergonomic Thumb Spacing */
+  .session-controls {
+    flex-shrink: 0;
+    padding: 12px 16px calc(14px + var(--sab)) !important;
+    gap: 10px !important;
+    background: var(--bg-surface-glass);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid var(--border-hairline);
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .session-controls .btn-primary,
+  .session-controls .btn-secondary,
+  .session-controls button {
+    min-height: 48px !important;
+    min-width: 48px !important;
+    padding: 0 18px !important;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+  }
+
+  /* Session Recap on Mobile */
+  .session-recap-wrap {
+    padding-bottom: 16px;
+  }
+
+  .session-recap-title {
+    font-size: 1.25rem;
+  }
+
+  .session-recap-questions {
+    max-height: 180px;
+    padding: 12px;
+  }
+
+  /* Form Elements Touch Sizing: 48px */
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-label {
+    font-size: 0.88rem;
+    margin-bottom: 6px;
+  }
+
+  .form-input, .form-select, .form-textarea {
+    font-size: 16px !important; /* Prevents iOS Safari Auto-Zoom */
+    min-height: 48px !important;
+    padding: 12px 14px;
+    box-sizing: border-box;
+  }
+
+  /* Toasts Position on Mobile */
+  .toast-container {
+    bottom: calc(var(--nav-mobile-height) + var(--sab) + 16px) !important;
+    width: 90%;
+    max-width: 360px;
+  }
+
+  .toast {
+    font-size: 0.88rem;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    text-align: center;
+  }
+}
+
+/* ============================================================
+   2. ULTRA SMALL MOBILE (320px - 360px)
+   e.g. Galaxy Fold outer screen, iPhone SE 1st gen, small devices
+   ============================================================ */
+@media (max-width: 360px) {
+  .page-container {
+    padding: 10px 10px !important;
+  }
+
+  .hero-card {
+    padding: 18px 12px !important;
+  }
+
+  .hero-title {
+    font-size: 1.35rem !important;
+  }
+
+  .hero-subtitle {
+    font-size: 0.82rem !important;
+  }
+
+  /* Switch to 2 columns on very narrow screens so items aren't crushed */
+  .quick-doors-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 8px !important;
+  }
+
+  .quick-door-btn {
+    min-height: 64px !important;
+    min-width: 48px !important;
+    font-size: 0.78rem;
+    padding: 8px 4px;
+  }
+
+  .bottom-nav-item span:not(.bottom-nav-icon) {
+    font-size: 0.58rem;
+  }
+
+  .bottom-nav-icon {
+    font-size: 1.15rem;
+  }
+
+  /* Keep 48px minimum touch target size */
+  .selector-tab {
+    padding: 8px 14px !important;
+    font-size: 0.82rem;
+    min-height: 48px !important;
+    min-width: 48px !important;
+  }
+
+  .btn-icon {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    min-height: 48px !important;
+    font-size: 1.05rem;
+  }
+
+  .session-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .session-controls > div {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .session-controls button {
+    width: 100%;
+    min-height: 48px !important;
+  }
+}
+
+/* ============================================================
+   3. STANDARD MOBILE (361px - 430px)
+   e.g. iPhone 13/14/15/16 Pro, Galaxy S21/S22/S23/S24, Pixel 7/8
+   ============================================================ */
+@media (min-width: 361px) and (max-width: 430px) {
+  .quick-doors-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 10px !important;
+  }
+}
+
+/* ============================================================
+   4. LARGE MOBILE & PHABLET (431px - 767px)
+   e.g. iPhone Pro Max, Galaxy Ultra, large Foldables unfolded
+   ============================================================ */
+@media (min-width: 431px) and (max-width: 767px) {
+  .quick-doors-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+  }
+}
+
+/* ============================================================
+   5. TABLET LANDSCAPE & DESKTOP (>= 768px)
+   Clean transition from Mobile to Desktop
+   ============================================================ */
+@media (min-width: 768px) {
+  .app-wrapper {
+    padding-bottom: 0 !important;
+  }
+
+  .bottom-nav {
+    display: none !important; /* Hide mobile bottom dock */
+  }
+
+  .nav-links {
+    display: flex !important;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .nav-link {
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 10px;
+  }
+
+  .page-container {
+    padding: 24px 20px !important;
+  }
+
+  .hero-card {
+    padding: 44px 32px !important;
+    gap: 16px;
+  }
+
+  .hero-title {
+    font-size: clamp(2rem, 3.5vw, 2.65rem) !important;
+  }
+
+  .hero-subtitle {
+    font-size: 1.15rem !important;
+  }
+
+  .hero-actions {
+    flex-direction: row;
+    gap: 12px;
+  }
+
+  .hero-actions .btn-primary,
+  .hero-actions .btn-secondary {
+    width: auto !important;
+    min-height: 48px;
+    min-width: 48px;
+  }
+
+  .quick-doors-grid {
+    grid-template-columns: repeat(6, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .cards-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+  }
+
+  .modal-overlay {
+    align-items: center !important;
+    padding: 24px !important;
+  }
+
+  .modal-box {
+    border-radius: var(--radius-xl) !important;
+    max-height: 88vh !important;
+    padding: 24px !important;
+    transform: translateY(12px) scale(0.98) !important;
+  }
+
+  .modal-box::before {
+    display: none !important;
+  }
+
+  .modal-overlay.active .modal-box {
+    transform: translateY(0) scale(1) !important;
+  }
+
+  .session-question-text {
+    font-size: 1.85rem !important;
+  }
+
+  .session-controls {
+    gap: 14px;
+    padding: 16px 24px 24px;
+  }
+
+  .session-controls button {
+    min-height: 48px;
+    min-width: 48px;
+  }
+}
+
+/* ============================================================
+   6. WIDE DESKTOP (>= 1024px)
+   ============================================================ */
+@media (min-width: 1024px) {
+  .cards-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 18px !important;
+  }
+
+  .page-container {
+    max-width: 1140px;
+    padding: 28px 24px !important;
+  }
+
+  .hero-card {
+    padding: 52px 40px !important;
+  }
+}
+
+/* ============================================================
+   7. EXTRA WIDE SCREENS (>= 1440px)
+   ============================================================ */
+@media (min-width: 1440px) {
+  .page-container {
+    max-width: 1240px;
+  }
+}
+
+/* ============================================================
+   8. MOBILE DRAWER NAVIGATION STYLES
+   ============================================================ */
+.mobile-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  background: rgba(8, 6, 10, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.mobile-drawer-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobile-drawer-panel {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: min(320px, 85vw);
+  background: var(--bg-surface);
+  border-left: 1px solid var(--border-hairline);
+  box-shadow: -8px 0 30px rgba(0, 0, 0, 0.5);
+  z-index: 160;
+  display: flex;
+  flex-direction: column;
+  padding: calc(16px + var(--sat)) 16px calc(20px + var(--sab)) 16px;
+  transform: translateX(100%);
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-drawer-overlay.active .mobile-drawer-panel {
+  transform: translateX(0);
+}
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.drawer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Adequate thumb spacing */
+  margin-bottom: 20px;
+}
+
+.drawer-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: transparent;
+  transition: all var(--transition-fast);
+  min-height: 48px; /* Uniform 48px touch target */
+  min-width: 48px;
+  box-sizing: border-box;
+}
+
+.drawer-link:hover,
+.drawer-link.active {
+  background: rgba(216, 178, 110, 0.12);
+  color: var(--accent-gold);
+}
+
+.drawer-link-icon {
+  font-size: 1.25rem;
+  width: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================================
+   9. MOTION PREFERENCES & TOUCH ACCESSIBILITY
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body[data-motion="false"] *,
+body[data-motion="false"] *::before,
+body[data-motion="false"] *::after {
+  animation: none !important;
+  transition: none !important;
+}
